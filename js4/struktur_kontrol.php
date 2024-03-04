@@ -20,7 +20,7 @@ if($nilaiNumerik >= 90 && $nilaiNumerik <= 100){
 echo "<br>";
 echo "<br>";
 
-
+echo "<hr>";
 //WHILE
 echo "WHILE<br>"; //(Saya beri echo agar mudah dibaca saat dirun di browser)
 $jarakSaatIni = 0; 
@@ -42,7 +42,7 @@ echo "Atlet tersebut memerlukan $hari hari untuk mencapai jarak 500 kilometer";
 echo "<br>";
 echo "<br>";
 
-
+echo "<hr>";
 //FOR
 echo "FOR <br>"; //(Saya beri echo agar mudah dibaca saat dirun di browser)
 $jumlahLahan = 10;
@@ -66,7 +66,7 @@ echo "Jumlah buah yang akan dipanen adalah : $jumlahBuah";
 echo "<br>";
 echo "<br>";
 
-
+echo "<hr>";
 //FOREACH
 echo "FOREACH <br>"; //(Saya beri echo agar mudah dibaca saat dirun di browser)
 $skorUjian = [85,92,78,96,88];
@@ -83,7 +83,7 @@ Variabel $totalSkor ditambah dengan nilai $skor pada setiap iterasi.
 echo "Total Skor ujian adalah : $totalSkor";
 echo "<br>";
 echo "<br>";
-
+echo "<hr>";
 //FOREACH DAN IF
 echo "FOREACH DAN IF <br>"; //(Saya beri echo agar mudah dibaca saat dirun di browser)
 $nilaiSiswa = [85,92,58,64,90,55,88,79,70,96];
@@ -107,7 +107,7 @@ eksekusi akan melanjutkan ke iterasi berikutnya menggunakan pernyataan continue.
 }
 echo "<br>";
 
-
+echo "<hr>";
 //=========================================
 //SOAL CERITA 1
 //Jawaban Saya
@@ -150,7 +150,7 @@ $rataRata = $totalNilai/(10-4);
 // Menampilkan hasil akhir
 echo "Rata-rata nilai setelah mengabaikan dua nilai terendah dan dua nilai tertinggi: $rataRata <br>";
 echo "<br>";
-
+echo "<hr>";
 //=========================================
 //SOAL CERITA 2
 //Jawaban Saya
@@ -161,10 +161,27 @@ Bantu pelanggan ini untuk menghitung harga yang harus dibayar setelah mendapatka
 
 echo "<br>";
 echo "JAWABAN 2 <br>";
+$hargaAwal = 120000; // Harga awal produk
+$persentaseDiskon = 20;// Persentase diskon
 
+echo "Harga Awal = Rp $hargaAwal <br>";
 
+// Mengecek apakah pembelian memenuhi syarat diskon
+if ($hargaAwal > 100000) {
+    // Menghitung diskon
+    $diskon = ($hargaAwal * $persentaseDiskon) / 100;
+    // Menghitung harga setelah diskon
+    echo "Jumlah diskon = Rp $diskon <br>";
+    $hargaSetelahDiskon = $hargaAwal - $diskon;
+    echo "Harga yang harus dibayar setelah diskon: Rp $hargaSetelahDiskon";
+    echo "<br>";
+} else {
+    // Jika tidak memenuhi syarat diskon, harga setelah diskon tetap sama dengan harga awal
+    echo "Harga yang harus dibayar: Rp $hargaAwal (Tanpa diskon)";
+    echo "<br>";
+}
 echo "<br>";
-
+echo "<hr>";
 //=========================================
 //SOAL CERITA 3
 //Jawaban Saya
@@ -177,5 +194,13 @@ Dan baris kedua “Apakah pemain mendapatkan hadiah tambahan? (YA/TIDAK)<br>";
 
 echo "<br>";
 echo "JAWABAN 3 <br>";
-?>
+// Skor pemain
+$skorPemain = 970; // Ganti dengan skor sesuai dengan kondisi permainan
 
+// Hadiah tambahan diberikan jika skor lebih dari 500
+$mendapatkanHadiah = ($skorPemain > 500) ? "YA" : "TIDAK";
+
+// Menampilkan informasi
+echo "Total skor pemain adalah: $skorPemain <br>";
+echo "Apakah pemain mendapatkan hadiah tambahan? $mendapatkanHadiah";
+?>
