@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="jquery-ui-1.13.2/jquery-ui.css" />
+    <script src="jquery-3.7.1.js"></script>
+    <script src="jquery-ui-1.13.2/jquery-ui.js"></script>
+    <script>
+        $(function(){
+            $("#jQuery_accordion").accordion();
+        });
+    </script>
+    </head> 
+    <body>
+        <!-- Kontainer (div) untuk accordion -->
+    <div id="jQuery_accordion">
+        <!-- Box 1 -->
+        <h3>header 1</h3>
+        <p>This is section 1.
+            Place your content here in paragraphs or use div elements etc.
+        </p>
+        <!-- Box 2 -->
+        <h3>header 2</h3>
+        <p>This is section 2, you can also include images like this :
+            <br> <img src="img/foto3.jpg"/>
+        </p>
+        <!-- Box 3 -->
+        <h3>header 3</h3>
+        <div>
+            <p>This is section 3. Content can include listing as well</p>
+            <!-- Daftar dalam panel ketiga -->
+            <ol>
+                <li>item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

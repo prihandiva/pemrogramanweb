@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="styleSlideShow.css" />
+		<script src="jquery-3.7.1.js"></script>
+		<script>
+			 var i = 0;
+        $(document).ready(function () {
+            // Hide judul slideshow dan gambar
+            $(".slidertitle, #slider img").hide();
+            // Panggil fungsi untuk menampilkan gambar selanjutnya
+            showNextImage();
+            // Atur interval untuk menampilkan gambar selanjutnya setiap 3 detik
+            setInterval("showNextImage()", 3000);
+        });
+        function showNextImage() {
+            i++;
+            // Tampilkan gambar dengan fadeIn
+            
+            $("#sliderImage" + i)
+                .appendTo("#slider")
+                .fadeIn(1100)
+                .delay(1100)
+                .fadeOut(1100);
+            // Tampilkan judul dengan fadeIn
+            
+            $("#title" + i)
+                .appendTo("#slider")
+                .fadeIn(1100)
+                .delay(1100)
+                .fadeOut(1100);
+            // Jika indeks mencapai 3, set kembali ke 0
+            if (i == 3) {
+                i = 0;
+            }
+        }
+		</script>
+	</head>
+	<body>
+		<div id="slider">
+			<img id="sliderImage1" src="img/foto1.jpg" />
+			<div class="slidertitle" id="title1">Gambar 1</div>
+			<img id="sliderImage2" src="img/foto2.jpg" />
+			<div class="slidertitle" id="title2">Gambar 2</div>
+			<img id="sliderImage3" src="img/foto3.jpg" />
+			<div class="slidertitle" id="title3">Gambar 3</div>
+		</div>
+	</body>
+</html>
