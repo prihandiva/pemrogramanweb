@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styleSlide.css"/>
+    <script src="jquery-3.7.1.js"></script>
+    <script>
+        $(document) .ready(function(){
+//Elemen ini digunakan sebagai tombol yang akan diklik untuk memicu efek slide pada elemen lain.
+            $("#flip").click(function(){ 
+//menyembunyikan elemen dengan efek slide ke atas(dari bawah ke atas) dengan kecepatan yang lambat 
+                $("#kotak2").slideUp("slow"); 
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="flip">Klik untuk Efek Slide</div>
+     <!--  Ini akan menyembunyikan elemen tersebut secara default saat halaman dimuat. -->
+    <div id="kotak2">Selamat Pagi</div>
+</body>
+</html>
+
