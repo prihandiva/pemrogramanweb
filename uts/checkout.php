@@ -47,7 +47,12 @@ $total = isset($_SESSION["total"]) ? $_SESSION["total"] : null;
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <header>
+    <div>
+    <img src="logo.png">
+    <h1>Checkout</h1>
+    </div>
+</header>
     <link rel="stylesheet" href="style.css">
     <style>
         table {
@@ -72,9 +77,6 @@ $total = isset($_SESSION["total"]) ? $_SESSION["total"] : null;
     </style>
 </head>
 <body>
-    <header>
-        <h1>Checkout</h1>
-    </header>
     <main>
         <?php if ($order) : ?>
             <h2>Rincian Pesanan</h2>
