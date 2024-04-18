@@ -10,7 +10,7 @@
 
     if($cek){
         echo "Anda berhasil login. Silahkan menuju "; ?>
-        <a href = "index.html">Halaman Ujian</a>
+        <a href = "index.html">Halaman Pemesanan Makanan</a>
         <?php
     }else{
         echo "Anda gagal login. Silahkan coba lagi";?>

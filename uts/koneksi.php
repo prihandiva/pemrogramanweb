@@ -1,8 +1,8 @@
 <?php
 // Informasi koneksi ke database
 $host = "localhost"; // Host database (biasanya "localhost")
-$username = "username_database"; // Username database
-$password = "password_database"; // Password database
+$username = "root"; // Username database
+$password = ""; // Password database
 $database = "uts_web"; // Nama database
 
 // Membuat koneksi ke database
