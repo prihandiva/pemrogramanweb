@@ -10,11 +10,11 @@
 
     if($cek){
         echo "Anda berhasil login. Silahkan menuju "; ?>
-        <a href = "FormUjian.html">Halaman Ujian</a>
+        <a href = "index.html">Halaman Ujian</a>
         <?php
     }else{
         echo "Anda gagal login. Silahkan coba lagi";?>
-        <a href = "loginUjian.html"> Login Kembali</a>
+        <a href = "login.html"> Login Kembali</a>
         <?php
         echo mysqli_error($connect);
     }
