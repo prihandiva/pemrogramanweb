@@ -3,7 +3,7 @@
 
     // Ambil data dari formulir login
     $username = $_POST['username'];
-    $password = md5($_POST['password']);
+    $password = ($_POST['password']);
 
     // Query untuk memeriksa keberadaan pengguna dalam database
     $query = "SELECT * FROM mahasiswa WHERE username='$username' AND password='$password'";
