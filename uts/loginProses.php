@@ -15,11 +15,11 @@
         session_start(); // Memulai session
         $_SESSION['username'] = $username; // Menyimpan username dalam session
 
-        // Set cookie jika Anda ingin menyimpan informasi login dalam cookies
+        // Set cookie jika ingin menyimpan informasi login dalam cookies
         // Cookie akan berakhir dalam waktu 1 jam
-        $cookie_name = "user_login";
+        $cookie_name = "username";
         $cookie_value = $username;
-        setcookie($cookie_name, $cookie_value, time() + (3600), "/"); // Cookie berlaku untuk seluruh domain
+        setcookie($cookie_name, $cookie_value, time() + (3600), "/"); 
 
         // Redirect ke halaman pemesanan makanan
         header("Location: index.html");
