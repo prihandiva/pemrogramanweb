@@ -1,0 +1,166 @@
+
+.ini-navbar{
+    border-bottom: 3px solid #333;
+    z-index: 4;
+    height: 163px;
+    
+  }
+
+.navbar{
+  background-color: #ffffff;
+  margin-bottom: 0;
+}
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 434px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 3;
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #130B2D; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    margin-top: 3.4%;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #FFFFFF;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  /* .sidenav a:hover {
+    color: #f1f1f1;
+  } */
+
+  /* Active/current link */
+  .sidebar a.active {
+    background-color: #4E73DF;
+    opacity: 50%;
+    color: white;
+  }
+
+/* Links on mouse-over */
+  .sidebar a:hover:not(.active) {
+    background-color: #4E73DF;
+    opacity: 50%;
+    color: white;
+  }
+  
+  .kotak-tombol{
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    background-color: #2C1A6C;
+    padding: 15px;
+    height: 105px;
+    width: 383px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border-radius: 12px;
+    align-items: center;
+    display: flex;
+  }
+
+  .ikon{
+    margin-right: 40px;
+    margin-left: 20px;
+  }
+  /* Style page content */
+  .main {
+    margin-left: 500px; /* Same as the width of the sidebar */
+    margin-top: 50px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+.Judul {
+    font-size: 80px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    margin-bottom: 46px;
+}
+
+.tombol-penilaian{
+    background-color: #362084;
+    width: 1377px;
+    height: 216px;
+    padding-left: 50px;
+    border-radius: 30px;
+    margin-bottom: 25px;
+}
+
+.kotak-gambar{
+   width: 216px;
+   height: 216px;
+   /*align-items: center;
+   justify-content: center; */
+   display: flex;
+   justify-content: center; /* Mengatur posisi horizontal ke tengah */
+   align-items: center; /* Mengatur posisi vertikal ke tengah */
+   /* height: 100%; Menyesuaikan tinggi dengan konten */
+}
+
+.gambar-fasilitas{
+    width: 175px;
+    height: 175px;
+
+
+}
+
+.gambar-dosen{
+    width: 100px;
+    height: 150px;
+    
+}
+
+.gambar-setting{
+    width: 216px;
+    height: 190px;
+}
+
+.gambar-book{
+    width: 160px;
+    height: 145px;
+}
+
+.nama-penilaian{
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: "Inter", sans-serif;
+    padding-left: 57px;
+    height: auto;
+    width: 1377px;
+    margin: 0px;
+    line-height: 0.3;
+}
+
+.keterangan-penilaian{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: "Inter", sans-serif;
+    padding-left: 57px;
+    padding-top: 0px;
+    margin: 0px;
+}
+
+.keterangan {
+    padding-left: 57px;
+}
+
+a{
+    text-decoration: none;
+}
