@@ -118,26 +118,35 @@ if ($conn->connect_error) {
         <div class="flex">
         <div class="card-container flex">
         <div class="flex justify-end">
-            <div class="">
+            <form method="post" action="">
                 <div class="form"> <!--HARUS E PLACEHOLDER SESUAI SESSION YG MASUK-->
-                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIP</p>
-                    <input type="text" name="username" id="username" class="form-control pb-2 px-2" placeholder="111xxxxxxxx" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIM</p>
+                    <input type="text" name="nim" id="username" class="form-control pb-2 px-2" value="<?=$_POST['nim']?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                 </div>
                 <div class="form">
                     <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Lengkap</p>
-                    <input type="text" name="username" id="username" class="form-control pb-2 px-2" placeholder="Fahmi Mardiansyah" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                    <input type="text" name="nama" id="username" class="form-control pb-2 px-2" value="<?= $_POST['nama']?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                </div>
+                <div class="form">
+                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Program Studi</p>
+                    <input type="text" name="prodi" id="prodi" class="form-control pb-2 px-2" value="<?= $_POST['prodi']?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" >
+                </div>
+                <div class="form">
+                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Program Studi</p>
+                    <input type="email" name="email" id="email" class="form-control pb-2 px-2" value="<?= $_POST['email']?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" >
                 </div>
                 <div class="form">
                     <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nomor HP</p>
-                    <input type="text" name="username" id="username" class="form-control pb-2 px-2" placeholder="0812xxxxxxxx" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" enabled>
+                    <input type="text" name="nohp" id="username" class="form-control pb-2 px-2" value="<?= $_POST['nohp']?>" placeholder="0812xxxxxxxx" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" >
                 </div>
-                <!-- <div>
-                    <button type="submit" id="edit" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" value="edit" style="border-radius: 10px; width: 100%;" href="profileDosenEdit.php">Edit</button>
-                </div> -->
+                <div class="form">
+                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nomor HP</p>
+                    <input type="email" name="email" id="email" class="form-control pb-2 px-2" value="fitria@gmail.com" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" >
+                </div>
                 <div class="mt-40 mb-36 ps-80">
                 <a href="profileDosenEdit.php" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;"class="mb-2" type='submit'>Simpan</a>
             </div>
-            </div>
+            </form>
         </div>
         <div class="circle" style="margin-top: 20px; margin-left: 100px;">
             <img src="../aset/lambang-polinema1.png" alt="Placeholder Image" width="250" height="285">

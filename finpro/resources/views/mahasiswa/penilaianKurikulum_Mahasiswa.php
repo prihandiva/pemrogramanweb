@@ -26,7 +26,7 @@ if (isset($_SESSION['nama'])) {
         die();
     }
 }
-$sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 4;";
+$sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 4 && s.id_survey = 1;";
 $result = $conn->query($sql);
 ?>
 

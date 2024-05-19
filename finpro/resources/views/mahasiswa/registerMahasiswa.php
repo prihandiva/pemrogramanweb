@@ -30,45 +30,51 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
     $sql = "INSERT INTO m_user (username, nama, password, posisi) VALUES ('$username', '$nama', '$password', '$user_type')";
     $resultUser = $conn->query($sql);
 
+    $id_user = '';
     if ($resultUser === TRUE) {
         // Mendapatkan ID user yang baru saja dimasukkan
         $id_user = $conn->insert_id;
 
         echo "User ID: " . $id_user . "<br>"; // Debugging
 
-        if (isset($_POST['nim']) && isset($_POST['prodi']) && isset($_POST['email']) && isset($_POST['nohp']) && isset($_POST['tahunmasuk'])) {
-            $responden_nim = $_POST['nim'];
-            $responden_prodi = $_POST['prodi'];
-            $responden_email = $_POST['email'];
-            $responden_hp = $_POST['nohp'];
-            $tahun_masuk = $_POST['tahunmasuk'];
-
-            // Melindungi dari SQL Injection
-            $responden_nim = mysqli_real_escape_string($conn, $responden_nim);
-            $responden_prodi = mysqli_real_escape_string($conn, $responden_prodi);
-            $responden_email = mysqli_real_escape_string($conn, $responden_email);
-            $responden_hp = mysqli_real_escape_string($conn, $responden_hp);
-            $tahun_masuk = mysqli_real_escape_string($conn, $tahun_masuk);
-
-            $sql2 = "INSERT INTO r_mhs (mhs_nim, mhs_nama, mhs_prodi, mhs_email, mhs_hp, mhs_tahunmasuk, id_user) VALUES ('$responden_nim', '$nama', '$responden_prodi', '$responden_email', '$responden_hp', '$tahun_masuk', '$id_user')";
-
-            echo "SQL2: " . $sql2 . "<br>"; // Debugging
-
-            $resultRegister = $conn->query($sql2);
-
-            if ($resultRegister === TRUE) {
-                echo "Akun mahasiswa berhasil didaftarkan.";
-                header("Location: ../index.php");
-                exit();
-            } else {
-                echo "Error inserting into r_mhs: " . $sql2 . "<br>" . $conn->error;
-            }
-        }
+       
     } else {
         echo "Error inserting into m_user: " . $sql . "<br>" . $conn->error;
     }
-    $conn->close();
 }
+
+if (isset($_POST['nim']) && isset($_POST['prodi']) && isset($_POST['email']) && isset($_POST['nohp']) && isset($_POST['tahunmasuk']) && isset($_POST['id_user'])) {
+    $responden_id_user = $_POST['id_user'];
+    $responden_nim = $_POST['nim'];
+    $responden_nama = $_POST['nama'];
+    $responden_prodi = $_POST['prodi'];
+    $responden_email = $_POST['email'];
+    $responden_hp = $_POST['nohp'];
+    $tahun_masuk = $_POST['tahunmasuk'];
+
+    // Melindungi dari SQL Injection
+    $responden_nim = mysqli_real_escape_string($conn, $responden_nim);
+    $responden_prodi = mysqli_real_escape_string($conn, $responden_prodi);
+    $responden_email = mysqli_real_escape_string($conn, $responden_email);
+    $responden_hp = mysqli_real_escape_string($conn, $responden_hp);
+    $tahun_masuk = mysqli_real_escape_string($conn, $tahun_masuk);
+
+    $sql2 = "INSERT INTO r_mhs (mhs_nim, mhs_nama, mhs_prodi, mhs_email, mhs_hp, mhs_tahunmasuk, id_user) VALUES ('$responden_nim', '$responden_nama', '$responden_prodi', '$responden_email', '$responden_hp', '$tahun_masuk', '$responden_id_user')";
+
+    echo "SQL2: " . $sql2 . "<br>"; // Debugging
+
+    $resultRegister = $conn->query($sql2);
+
+    if ($resultRegister === TRUE) {
+        echo "Akun mahasiswa berhasil didaftarkan.";
+        header("Location: ../index.php");
+        exit();
+    } else {
+        echo "Error inserting into r_mhs: " . $sql2 . "<br>" . $conn->error;
+    }
+}
+$conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -110,6 +116,7 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
         </div>
         <!---->
         <form action="" method="post">
+            <input type="text" name="id_user" value="<?= $id_user ?>" hidden>
             <input type="text" value="<?= $nama ?>" name="nama" hidden>
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">NIM</p>
             <input type="text" name="nim" placeholder="Masukkan NIM" class="w-full border px-4 rounded-lg text-sm h-10">
