@@ -57,16 +57,16 @@ if ($conn->connect_error) {
         <div class="left bg-[#130B2d] py-20 relative">
             <ul class="grid grid-rows-3 gap-3 text-center text-sm items-center justify-center">
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="dashboardMahasiswa.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
+                    <a class="flex items-center gap-3" href="dashboardTendik.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2685F5] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="surveyMahasiswa.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
+                    <a class="flex items-center gap-3" href="surveyTendik.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="reportMahasiswa.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
+                    <a class="flex items-center gap-3" href="reportTendik.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="profileMahasiswa.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
+                    <a class="flex items-center gap-3" href="profileTendik.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#423C57] font-bold text-white rounded-xl">
                     <a class="flex items-center gap-3" href="../logout.php"><img src="../aset/Logout.svg" class="w-10" /><span>LOG OUT</span></a>
@@ -81,7 +81,7 @@ if ($conn->connect_error) {
             <!--KONTEN-->
             <ul class="grid grid-rows-3 gap-3 text-sm  px-10">
                 <!--FASILITAS-->
-                <a class="w-full" href="penilaianFasilitas_Mahasiswa.php">
+                <a class="w-full" href="penilaianFasilitas_Tendik.php">
                     <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
                         <img src="../aset/Facility.svg">
                         <div>
@@ -90,33 +90,13 @@ if ($conn->connect_error) {
                         </div>
                     </li>
                 </a>
-                <!--DOSEN-->
-                <a class="w-full" href="penilaianDosen_Mahasiswa.php">
-                    <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                        <img src="../aset/Kurikulum.svg">
-                        <div>
-                            <h1 class="font-bold text-xl">Penilaian Dosen</h1>
-                            <p class="text-xs font-bold">Berikan Penilaian anda untuk Kinerja para dosen di Polinema</p>
-                        </div>
-                    </li>
-                </a>
                 <!--SISTEM-->
-                <a class="w-full" href="penilaianSistem_Mahasiswa.php">
+                <a class="w-full" href="penilaianSistem_Tendik.php">
                     <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
                         <img src="../aset/Sistem.svg">
                         <div>
                             <h1 class="font-bold text-xl">Penilaian Sistem</h1>
                             <p class="text-xs font-bold">Berikan Penilaian anda untuk sistem yang digunakan kampus polinema</p>
-                        </div>
-                    </li>
-                </a>
-                <!--KURIKULUM-->
-                <a class="w-full" href="penilaianKurikulum_Mahasiswa.php">
-                    <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                        <img src="../aset/kurikulum1.svg">
-                        <div>
-                            <h1 class="font-bold text-xl">Penilaian Kurikulum</h1>
-                            <p class="text-xs font-bold">Berikan Penilaian anda untuk Kurikulum Yang ada di Kampus Polinema</p>
                         </div>
                     </li>
                 </a>

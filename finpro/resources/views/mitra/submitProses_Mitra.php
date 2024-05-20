@@ -93,16 +93,16 @@ $conn->close();
         <div class="left bg-[#130B2d] py-20 relative">
             <ul class="grid grid-rows-3 gap-3 text-center text-sm items-center justify-center">
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="dashboardDosen.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
+                    <a class="flex items-center gap-3" href="dashboardMitra.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2685F5] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="surveyDosen.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
+                    <a class="flex items-center gap-3" href="surveyMitra.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="reportDosen.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
+                    <a class="flex items-center gap-3" href="reportMitra.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="profileDosen.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
+                    <a class="flex items-center gap-3" href="profileMitra.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#423C57] font-bold text-white rounded-xl">
                     <a class="flex items-center gap-3" href="../logout.php"><img src="../aset/Logout.svg" class="w-10" /><span>LOG OUT</span></a>
@@ -116,8 +116,8 @@ $conn->close();
                 <?= ($status_execute == 1) ? "Data Berhasil Dikirim" : "Data Gagal Dikirim"; ?>
                 <h1 class="text-5xl font-bold text-black mb-2">TERIMA KASIH</h1>
                 <p class="text-black mb-10">Atas Penilaiannya</p>
-                <button class="bg-[#2D1B6B] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"><a href="dashboardDosen.php">Dashboard</a></button>
-                <button class="bg-[#2D1B6B] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><a href="surveyDosen.php">Lanjut Survey</a></button>
+                <button class="bg-[#2D1B6B] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"><a href="dashboardMitra.php">Dashboard</a></button>
+                <button class="bg-[#2D1B6B] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><a href="surveyMitra.php">Lanjut Survey</a></button>
             </div>
         </div>
     </div>

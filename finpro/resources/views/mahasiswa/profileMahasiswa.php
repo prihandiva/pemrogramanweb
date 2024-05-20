@@ -45,13 +45,15 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
+echo $id_user;
+
 // Query untuk mendapatkan data mahasiswa berdasarkan id_user
-$sql = "SELECT mhs_nim, mhs_nama, mhs_prodi, mhs_email, mhs_hp, mhs_tahunmasuk FROM r_mhs WHERE id_user = $id_user";
+$sql = "SELECT * FROM r_mhs WHERE id_user = $id_user";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Mendapatkan data mahasiswa
     $row = $result->fetch_assoc();
+    // Mendapatkan data mahasiswa
     $nim = $row['mhs_nim'];
     $nama = $row['mhs_nama'];
     $prodi = $row['mhs_prodi'];

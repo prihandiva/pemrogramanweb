@@ -1,4 +1,3 @@
-console.log('hello')
 
 function selectUserType(userType) {
     const buttons = document.querySelectorAll('.user-type-button');

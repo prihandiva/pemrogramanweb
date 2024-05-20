@@ -84,9 +84,6 @@ if ($conn->connect_error) {
         </div>
     </div>
     </div>
-    <div class=""></div>
-    <div>
-    </div>
 </body>
 
 </html>

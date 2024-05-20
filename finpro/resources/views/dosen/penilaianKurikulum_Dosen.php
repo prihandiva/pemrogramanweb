@@ -14,7 +14,10 @@ $conn = new mysqli($servername, $username_db, $password_db, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
+/// Set id_kategori ke dalam session
+$_SESSION['id_kategori'] = 4;
+/// Set id_survey ke dalam session
+$_SESSION['id_survey'] = 2;
 //Check udah pernah isi apa belum
 if(isset($_SESSION['nama'])){ //TAMBAHIN CEK KATEGORI SURVEYNYA SOALNYA KLO dah ngisi 1 survey, survey lainnya gabisa
     $sql = "SELECT * FROM t_responden_dosen WHERE id_kategori = 4 AND responden_nama = '" . $_SESSION['nama'] . "'" ;

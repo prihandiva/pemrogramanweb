@@ -20,7 +20,10 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $user_status = $_POST['user_type'];
 
-echo $username . $password . $user_status ;
+$user_status = str_replace('-',' ',$user_status);
+
+echo $username . $password . $user_status;
+
 
 // Melindungi dari SQL Injection
 $username = mysqli_real_escape_string($conn, $username);
@@ -46,6 +49,7 @@ if ($result->num_rows > 0) {
             $_SESSION['username'] = $username; // Simpan username ke sesi
             $_SESSION['user_type'] = $user_status; // Simpan user_status ke sesi
             $_SESSION['nama'] = $row['nama']; // simpan nama user ke sesi
+            $_SESSION['id_user'] = $row['id_user']; // simpan id_user ke sesi
             echo "success";
             header("Location: mahasiswa/dashboardMahasiswa.php");
         exit();

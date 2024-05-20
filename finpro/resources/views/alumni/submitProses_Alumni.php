@@ -1,9 +1,8 @@
 <?php
 include "koneksi.php";
 session_start();
-if (!isset($_SESSION["nama"]))
-{
-header("location: ../index.php");
+if (!isset($_SESSION["nama"])) {
+    header("location: ../index.php");
 }
 
 $servername = "localhost";
@@ -17,7 +16,8 @@ $conn = new mysqli($servername, $username_db, $password_db, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+$nama = $_SESSION['nama'];
+$id_survey = $_SESSION['id_survey'];
 
 if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['saran']) && isset($_POST['id_kategori'])) {
     $id_survey = $_POST['id_survey'];
@@ -26,15 +26,16 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
     $id_kategori = $_POST['id_kategori'];
 
 
+    $resultUserData = $conn->query("SELECT * FROM r_alumni WHERE alumni_nama = '". $nama ."';");
+    $row = $resultUserData->fetch_assoc();
 
-    $stmt = $conn->prepare("INSERT INTO t_responden_alumni (id_responden_dosen, id_survey,  responden_tanggal , responden_nip,  responden_nama , responden_unit, saran,id_kategori) VALUES (null, ?, NOW(),null , ?,null , ?,?)");
 
-    $stmt->bind_param("issi",  $id_survey, $nama, $saran,$id_kategori);
+    $stmt = $conn->prepare("INSERT INTO t_responden_alumni (id_responden_alumni, id_survey,  responden_tanggal , responden_nim, responden_nama ,responden_prodi,responden_email,responden_hp,tahun_lulus, saran,id_kategori) VALUES (null,?,NOW(),?,?,?,?,?,?,?,?)");
+
+    $stmt->bind_param("isssssssi",  $id_survey, $row['alumnni_nim'], $nama,$row['alumni_prodi'],$row['alumni_email'],$row['alumni_hp'],$row['alumni_tahunkeluar'], $saran, $id_kategori);
     $status_execute = $stmt->execute();
 
-
     $new_id = $stmt->insert_id;
-
 
     if ($status_execute) {
         $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori'];
@@ -51,6 +52,8 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
 } else {
     echo "Failed input data";
 }
+
+
 $conn->close();
 ?>
 
@@ -82,7 +85,7 @@ $conn->close();
             </div>
         </div>
         <div class="text-sm text-end mt-10">
-        <h1><b><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></b></h1>
+            <h1><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></h1>
         </div>
         <hr>
     </div>

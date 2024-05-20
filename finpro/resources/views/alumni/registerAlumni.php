@@ -43,34 +43,34 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
     }
 }
 
-if (isset($_POST['nim']) && isset($_POST['prodi']) && isset($_POST['email']) && isset($_POST['nohp']) && isset($_POST['tahunmasuk']) && isset($_POST['id_user'])) {
+if (isset($_POST['nim']) && isset($_POST['prodi']) && isset($_POST['email']) && isset($_POST['nohp']) && isset($_POST['tahunkeluar']) && isset($_POST['id_user'])) {
     $responden_id_user = $_POST['id_user'];
     $responden_nim = $_POST['nim'];
     $responden_nama = $_POST['nama'];
     $responden_prodi = $_POST['prodi'];
     $responden_email = $_POST['email'];
     $responden_hp = $_POST['nohp'];
-    $tahun_masuk = $_POST['tahunmasuk'];
+    $tahun_keluar = $_POST['tahunkeluar'];
 
     // Melindungi dari SQL Injection
     $responden_nim = mysqli_real_escape_string($conn, $responden_nim);
     $responden_prodi = mysqli_real_escape_string($conn, $responden_prodi);
     $responden_email = mysqli_real_escape_string($conn, $responden_email);
     $responden_hp = mysqli_real_escape_string($conn, $responden_hp);
-    $tahun_masuk = mysqli_real_escape_string($conn, $tahun_masuk);
+    $tahun_keluar = mysqli_real_escape_string($conn, $tahun_keluar);
 
-    $sql2 = "INSERT INTO r_mhs (mhs_nim, mhs_nama, mhs_prodi, mhs_email, mhs_hp, mhs_tahunmasuk, id_user) VALUES ('$responden_nim', '$responden_nama', '$responden_prodi', '$responden_email', '$responden_hp', '$tahun_masuk', '$responden_id_user')";
+    $sql2 = "INSERT INTO r_alumni (alumni_nim, alumni_nama, alumni_prodi, alumni_email, alumni_hp, alumni_tahunlulus, id_user) VALUES ('$responden_nim', '$responden_nama', '$responden_prodi', '$responden_email', '$responden_hp', '$tahun_keluar', '$responden_id_user')";
 
     echo "SQL2: " . $sql2 . "<br>"; // Debugging
 
     $resultRegister = $conn->query($sql2);
 
     if ($resultRegister === TRUE) {
-        echo "Akun mahasiswa berhasil didaftarkan.";
+        echo "Akun alumni berhasil didaftarkan.";
         header("Location: ../index.php");
         exit();
     } else {
-        echo "Error inserting into r_mhs: " . $sql2 . "<br>" . $conn->error;
+        echo "Error inserting into r_alumni: " . $sql2 . "<br>" . $conn->error;
     }
 }
 $conn->close();
@@ -126,8 +126,8 @@ $conn->close();
             <input type="email" name="email" placeholder="Masukkan Email" class="w-full border px-4 rounded-lg text-sm h-10">
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Nomor HP</p>
             <input type="text" name="nohp" placeholder="Masukkan Nomor Handphone" class="w-full border px-4 rounded-lg text-sm h-10">
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Tahun Masuk</p>
-            <input type="text" name="tahunmasuk" placeholder="Masukkan Tahun Masuk" class="w-full border px-4 rounded-lg text-sm h-10">
+            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Tahun Keluar</p>
+            <input type="text" name="tahunkeluar" placeholder="Masukkan Tahun Keluar" class="w-full border px-4 rounded-lg text-sm h-10">
             <div class="bg-[#2D1B6B] w-full py-2 text-center rounded-md mt-4">
                 <button type="submit" class="text-white font-bold">Buat Akun Baru</button>
             </div>

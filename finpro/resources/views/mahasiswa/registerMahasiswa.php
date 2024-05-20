@@ -37,7 +37,7 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
 
         echo "User ID: " . $id_user . "<br>"; // Debugging
 
-       
+
     } else {
         echo "Error inserting into m_user: " . $sql . "<br>" . $conn->error;
     }
@@ -79,7 +79,8 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-<head>  
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
@@ -121,7 +122,26 @@ $conn->close();
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">NIM</p>
             <input type="text" name="nim" placeholder="Masukkan NIM" class="w-full border px-4 rounded-lg text-sm h-10">
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Program Studi</p>
-            <input type="text" name="prodi" placeholder="Masukkan Prodi" class="w-full border px-4 rounded-lg text-sm h-10">
+            <select name="prodi" class="w-full border px-4 rounded-lg text-sm h-10 mt-4">
+                <option value="">Pilih Program Studi</option>
+                <option value="Teknik Informatika">Teknik Informatika</option>
+                <option value="Sistem Informasi Bisnis">Sistem Informasi Bisnis</option>
+                <option value="Teknik Elektronika">Teknik Elektronika</option>
+                <option value="Sistem Kelistrikan">Sistem Kelistrikan</option>
+                <option value="Jaringan Telekomunikasi Digital">Jaringan Telekomunikasi Digital</option>
+                <option value="Teknologi Kimia Industri">Teknologi Kimia Industri</option>
+                <option value="Teknik Otomotif Elektronik">Teknik Otomotif Elektronik</option>
+                <option value="Teknik Mesin Produksi Dan Perawatan">Teknik Mesin Produksi Dan Perawatan</option>
+                <option value="Manajemen Rekayasa Konstruksi">Manajemen Rekayasa Konstruksi</option>
+                <option value="Teknologi Rekayasa Konstruksi Jalan Dan Jembatan">Teknologi Rekayasa Konstruksi Jalan Dan Jembatan</option>
+                <option value="Akuntansi Manajemen">Akuntansi Manajemen</option>
+                <option value="Keuangan">Keuangan</option>
+                <option value="Manajemen Pemasaran">Manajemen Pemasaran</option>
+                <option value="Pengelolaan Arsip Dan Rekaman Informasi">Pengelolaan Arsip Dan Rekaman Informasi</option>
+                <option value="Usaha Perjalanan Wisata">Usaha Perjalanan Wisata</option>
+                <option value="Bahasa Inggris Untuk Komunikasi Bisnis Dan Profesional">Bahasa Inggris Untuk Komunikasi Bisnis Dan Profesional</option>
+                <option value="Bahasa Inggris Untuk Industri Pariwisata">Bahasa Inggris Untuk Industri Pariwisata</option>
+            </select>
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Email</p>
             <input type="email" name="email" placeholder="Masukkan Email" class="w-full border px-4 rounded-lg text-sm h-10">
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Nomor HP</p>
@@ -134,11 +154,10 @@ $conn->close();
         </form>
     </main>
 </body>
+
 </html>
 <?php
 
 
 
 ?>
-
-

@@ -81,7 +81,7 @@ if ($conn->connect_error) {
                 <img src="../aset/lambang-polinema1.png" class="w-20" />
                 <div>
                     <h1 class="font-bold text-xl">SISKA - POLINEMA</h1>
-                    <hr class="border-2 border-black" />
+                    <hr class="border-2 border-black">
                     <p class="text-xs font-bold">SURVEY KEPUASAN PELANGGAN POLINEMA</p>
                 </div>
             </div>

@@ -1,76 +1,142 @@
-<!-- profileDosen.php -->
-<?php 
+<?php
 session_start();
-if (!isset($_SESSION["nama"]))
-{
-header("location: ../index.php");
+include "koneksi.php";
+// Proses login
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Melindungi dari SQL Injection
+    $username = mysqli_real_escape_string($conn, $username);
+    $password = mysqli_real_escape_string($conn, $password);
+
+    $sql = "SELECT id_user, nama FROM m_user WHERE username='$username' AND password='$password'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $_SESSION['id_user'] = $row['id_user'];
+        $_SESSION['nama'] = $row['nama'];
+        $_SESSION['user_type'] = 'Dosen'; // Contoh user type
+        header("Location: profileDosen.php");
+        exit();
+    } else {
+        echo "Username atau password salah.";
+    }
 }
+
+// Memastikan `id_user` ada di sesi
+if (!isset($_SESSION['id_user'])) {
+    echo "Anda belum login.";
+    exit();
+}
+
+$id_user = $_SESSION['id_user']; // Ambil id_user dari sesi
+
+// Buat koneksi
 $servername = "localhost";
 $username_db = "root";
 $password_db = "";
 $database = "projekakhir";
 
 $conn = new mysqli($servername, $username_db, $password_db, $database);
-// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+echo $id_user;
+
+// Query untuk mendapatkan data Dosen berdasarkan id_user
+$sql = "SELECT * FROM r_dosen WHERE id_user = $id_user";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    // Mendapatkan data Dosen
+    $nip = $row['dosen_nip'];
+    $nama = $row['dosen_nama'];
+    $unit = $row['dosen_unit'];
+} else {
+    echo "Tidak ada data Dosen ditemukan.";
+    exit();
+}
+
+// Proses update data
+if (isset($_POST['unit'])) {
+    
+    $unit = $_POST['unit'];
+
+    $sql = "UPDATE r_dosen SET dosen_unit = ? WHERE id_user = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $dosen_unit, $id_user);
+    if ($stmt->execute()) {
+        echo "Data berhasil diperbarui.";
+    } else {
+        echo "Terjadi kesalahan: " . $stmt->error;
+    }
+    $stmt->close();
+}
+
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Profile</title>
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
-<style>
-    body {
-        font-family: "Montserrat";
-        font-style: normal;
-        font-weight: 400;
-    }
-    .profile-card {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 30px;
-        text-align: center;
-    }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 400;
+        }
 
-    .profile-card h2 {
-        margin: 0;
-        margin-bottom: 10px;
-    }
+        .profile-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
 
-    .profile-card p {
-        margin: 0;
-        margin-bottom: 20px;
-    }
+        .profile-card h2 {
+            margin: 0;
+            margin-bottom: 10px;
+        }
 
-    .profile-card a {
-        display: block;
-        background-color: #2685F5;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-    }
+        .profile-card p {
+            margin: 0;
+            margin-bottom: 20px;
+        }
 
-    .profile-card a:hover {
-        background-color: #1A62B5;
-    }
+        .profile-card a {
+            display: block;
+            background-color: #2685F5;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
 
-    .photo-caption {
-      text-align: center;
-      margin-top: 10px;
-    }
-    .profile-info-label {
-      font-weight: bold;
-      font-size: 16px;
-    }
+        .profile-card a:hover {
+            background-color: #1A62B5;
+        }
 
-</style>
-<script src="https://cdn.tailwindcss.com"></script>
+        .photo-caption {
+            text-align: center;
+            margin-top: 10px;
+        }
 
+        .profile-info-label {
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 <body>
     <!--DIV 1 (HEADER)-->
     <div class="grid grid-cols-2">
@@ -84,7 +150,7 @@ if ($conn->connect_error) {
             </div>
         </div>
         <div class="text-sm text-end mt-10">
-        <h1><b><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></b></h1>
+            <h1><b><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></b></h1>
         </div>
         <hr />
     </div>
@@ -113,38 +179,48 @@ if ($conn->connect_error) {
         </div>
         <!--DIV KANAN (PROFILE CONTENT)-->
         <div class="col-span-4 p-10">
-        <div class="flex">
-        <div class="card-container flex">
-        <div class="flex justify-end">
-            <form class="" action="profileDosenEdit.php">
-                <div class="form">
-                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIP</p>
-                    <input type="text" name="username" id="username" class="form-control pb-2 px-2" value="" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+            <div class="flex">
+                <div class="card-container flex">
+                    <div class="flex justify-end">
+                        <form action="profileDosen.php" method="POST">
+                            <div class="form">
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIP</p>
+                                <input type="text" name="nip" id="nip" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nim); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                            </div>
+                            <div class="form">
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Lengkap</p>
+                                <input type="text" name="nama" id="nama" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nama); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                            </div>
+                            <div class="form">
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Unit Kerja</p>
+                                <select name="unit" class="w-full border px-4 rounded-lg text-sm h-10 mt-4">
+                                <option value="<?= htmlspecialchars($unit); ?>">Pilih Unit</option>
+                                <option value="Jurusan Teknologi Informasi">Jurusan Teknologi Informasi</option>
+                                <option value="Jurusan Administrasi Niaga">Jurusan Administrasi Niaga</option>
+                                <option value="Jurusan Akutansi">Jurusan Akutansi</option>
+                                <option value="Jurusan Teknik Kimia">Jurusan Teknik Kimia</option>
+                                <option value="Jurusan Teknik Elektro">Jurusan Teknik Elektro</option>
+                                <option value="Jurusan Teknik Mesin">Jurusan Teknik Mesin</option>
+                                <option value="Jurusan Teknik Sipil">Jurusan Teknik Sipil</option>
+                                <option value="Mata Kuliah Umum">Mata Kuliah Umum</option>
+                            </select>
+                                <input type="text" name="unit" id="unit" class="form-control pb-2 px-2" value="<?= htmlspecialchars($prodi); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
+                            </div>
+                            
+                            <div class="mt-40 mb-36 ps-80">
+                                <button type="submit" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="circle" style="margin-top: 20px; margin-left: 100px;">
+                        <img src="../aset/lambang-polinema1.png" alt="Placeholder Image" width="250" height="285">
+                        <div class="photo-caption">
+                            <button class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Dosen</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form">
-                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Lengkap</p>
-                    <input type="text" name="username" id="nama" class="form-control pb-2 px-2" placeholder="Fahmi Mardiansyah" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
-                </div>
-                <div class="form">
-                    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nomor HP</p>
-                    <input type="text" name="username" id="nohp" class="form-control pb-2 px-2" placeholder="0812xxxxxxxx" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
-                </div>
-                <!-- <div>
-                    <button type="submit" id="edit" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" value="edit" style="border-radius: 10px; width: 100%;" href="profileDosenEdit.php">Edit</button>
-                </div> -->
-                <div class="mt-40 mb-36 ps-80">
-                <a href="profileDosenEdit.php" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;"class="mb-2">Edit</a>
             </div>
-</form>
         </div>
-        <div class="circle" style="margin-top: 20px; margin-left: 100px;">
-            <img src="../aset/lambang-polinema1.png" alt="Placeholder Image" width="250" height="285">
-                <div class="photo-caption">
-                <button class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">DOSEN</button>
-                </div>
-        </div>
-        </div>
-    </div>
     </div>
 </body>
 </html>

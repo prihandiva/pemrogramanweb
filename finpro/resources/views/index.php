@@ -95,10 +95,10 @@ if (!isset($_SESSION['username'])) {
                                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl user-type-button Admin cursor-pointer" onclick="selectUserType('Admin')">
                                     <h1>Admin</h1>
                                 </li>
-                                <li class="px py-2 bg-[#2D1B6B] font-bold text-white rounded-xl user-type-button Wali_Mahasiswa cursor-pointer" onclick="selectUserType('Wali Mahasiswa')">
+                                <li class="px py-2 bg-[#2D1B6B] font-bold text-white rounded-xl user-type-button Wali-Mahasiswa cursor-pointer" onclick="selectUserType('Wali-Mahasiswa')">
                                     <h1 class="text-nowrap text-sm">Wali Mahasiswa</h1>
                                 </li>
-                                <li class="px py-2 bg-[#2D1B6B] font-bold text-white rounded-xl text-nowrap user-type-button Tenaga_Pendidikan cursor-pointer" onclick="selectUserType('Tenaga Pendidikan')">
+                                <li class="px py-2 bg-[#2D1B6B] font-bold text-white rounded-xl text-nowrap user-type-button Tenaga-Pendidikan cursor-pointer" onclick="selectUserType('Tenaga-Pendidikan')">
                                     <h1 class="text-nowrap text-sm">Tenaga Pendidikan</h1>
                                 </li>
                             </ul>

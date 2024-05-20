@@ -50,7 +50,7 @@ if ($conn->connect_error) {
             </div>
         </div>
         <div class="text-sm text-end mt-10">
-            <h1><?=$_SESSION['nama']?> | <?=$_SESSION['posisi']?></h1> <!--HARUSNYA NAMPILIN NAMA + POSISI-->
+            <h1><?=$_SESSION['nama']?> | <?=$_SESSION['user_type']?></h1> <!--HARUSNYA NAMPILIN NAMA + POSISI-->
         </div>
     </div>
     <hr class="border-2 border-black" />
@@ -72,7 +72,7 @@ if ($conn->connect_error) {
                     <a class="flex items-center gap-3" href="profileWali.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#423C57] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="../logout.php"><img src="Logout.svg" class="w-10" /><span>LOG OUT</span></a></li>
+                    <a class="flex items-center gap-3" href="../logout.php"><img src="../aset/Logout.svg" class="w-10" /><span>LOG OUT</span></a></li>
             </ul>
         </div>
         <!--DIV KANAN-->
