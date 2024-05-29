@@ -18,7 +18,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         $_SESSION['id_user'] = $row['id_user'];
         $_SESSION['nama'] = $row['nama'];
-        $_SESSION['user_type'] = 'Wali'; // Contoh user type
+        $_SESSION['user_type'] = 'Wali Mahasiswa'; // Contoh user type
         header("Location: profileWali.php");
         exit();
     } else {
