@@ -20,7 +20,7 @@ $_SESSION['id_survey'] = 3;
 
 // Check apakah session 'nama' sudah diset
 if (isset($_SESSION['nama'])) {
-    $sql = "SELECT * FROM t_responden_wali WHERE id_kategori = 1 AND responden_nama = '" . $_SESSION['nama'] . "'" ;
+    $sql = "SELECT * FROM t_responden_ortu WHERE id_kategori = 1 AND responden_nama = '" . $_SESSION['nama'] . "'" ;
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         header("Location: sudahIsi_Wali.php");
@@ -94,7 +94,7 @@ $result = $conn->query($sql);
         <div class="col-span-4">
         <main class="col-span-4">
         <div class="bg-white p-8 rounded-xl shadow-md">
-        <h1 class="text-6xl font-bold mb-6">Penilaian Fasilitas</h1>
+        <h1 class="text-6xl font-bold mb-6">Penilaian Fasilitas dan Layanan</h1>
         <form action = "submitProses_Wali.php" method= "post">
             <div class="grid gap-4 col-span-4">
                 <?php 

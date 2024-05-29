@@ -45,8 +45,6 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-echo $id_user;
-
 // Query untuk mendapatkan data Wali Mahasiswa berdasarkan id_user
 $sql = "SELECT * FROM r_ortu WHERE id_user = $id_user";
 $result = $conn->query($sql);
@@ -54,31 +52,34 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     // Mendapatkan data Wali Mahasiswa
-    $nim = $row['ortu_nim'];
-    $nama = $row['ortu_nama'];
-    $prodi = $row['ortu_prodi'];
-    $email = $row['ortu_email'];
-    $nohp = $row['ortu_hp'];
-    $tahunmasuk = $row['ortu_tahunmasuk'];
+    $ortu_nama = $row['ortu_nama'];
+    $ortu_jk = $row['ortu_jk'];
+    $ortu_umur = $row['ortu_umur'];
+    $ortu_hp = $row['ortu_hp'];
+    $ortu_pendidikan = $row['ortu_pendidikan'];
+    $ortu_pekerjaan = $row['ortu_pekerjaan'];
+    $ortu_penghasilan = $row['ortu_penghasilan'];
+    $mhs_nim = $row['mhs_nim'];
+    $mhs_nama = $row['mhs_nama'];
+    $mhs_prodi = $row['mhs_prodi'];
 } else {
     echo "Tidak ada data Wali Mahasiswa ditemukan.";
     exit();
 }
 
 // Proses update data
-if (isset($_POST['email']) && isset($_POST['nohp'])) {
-    $ortu_email = $_POST['email'];
-    $ortu_nohp = $_POST['nohp'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['ortu_hp'])) {
+        $ortu_hp = $_POST['ortu_hp'];
 
-    $sql = "UPDATE r_ortu SET ortu_email = ?, ortu_hp = ? WHERE id_user = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $ortu_email, $ortu_nohp, $id_user);
-    if ($stmt->execute()) {
-        echo "Data berhasil diperbarui.";
-    } else {
-        echo "Terjadi kesalahan: " . $stmt->error;
+        // Melindungi dari SQL Injection
+        $ortu_hp = mysqli_real_escape_string($conn, $ortu_hp);
+
+        $sql = "UPDATE r_ortu SET ortu_hp = ? WHERE id_user = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $ortu_hp, $id_user);
+        $stmt->close();
     }
-    $stmt->close();
 }
 
 $conn->close();
@@ -89,7 +90,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
+    <title>Profile Wali</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
     <style>
         body {
@@ -188,31 +189,29 @@ $conn->close();
                     <div class="flex justify-end">
                         <form action="profileWali.php" method="POST">
                             <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIM</p>
-                                <input type="text" name="nim" id="nim" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nim); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
-                            </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Lengkap</p>
-                                <input type="text" name="nama" id="nama" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nama); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
-                            </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Program Studi</p>
-                                <input type="text" name="prodi" id="prodi" class="form-control pb-2 px-2" value="<?= htmlspecialchars($prodi); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
-                            </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Email</p>
-                                <input type="email" name="email" id="email" class="form-control pb-2 px-2" value="<?= htmlspecialchars($email); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
-                            </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nomor HP</p>
-                                <input type="text" name="nohp" id="nohp" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nohp); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
-                            </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Tahun Masuk</p>
-                                <input type="text" name="tahunmasuk" id="tahunmasuk" class="form-control pb-2 px-2" value="<?= htmlspecialchars($tahunmasuk); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
-                            </div>
-                            <div class="mt-40 mb-36 ps-80">
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama</p>
+                                <input type="text" name="nama" value="<?= $ortu_nama ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Jenis Kelamin</p>
+                                <input type="text" name="jk" value="<?= $ortu_jk ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Umur</p>
+                                <input type="text" name="umur" value="<?= $ortu_umur ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">No HP</p>
+                                <input type="text" name="ortu_hp" value="<?= $ortu_hp ?>" class="px-3 py-2 mb-3 bg-white rounded-xl w-full" />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Pendidikan</p>
+                                <input type="text" name="ortu_pendidikan" value="<?= $ortu_pendidikan ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Pekerjaan</p>
+                                <input type="text" name="ortu_pekerjaan" value="<?= $ortu_pekerjaan ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Penghasilan</p>
+                                <input type="text" name="ortu_penghasilan" value="<?= $ortu_penghasilan ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIM Mahasiswa</p>
+                                <input type="text" name="mhs_nim" value="<?= $mhs_nim ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Mahasiswa</p>
+                                <input type="text" name="mhs_nama" value="<?= $mhs_nama ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Prodi Mahasiswa</p>
+                                <input type="text" name="mhs_prodi" value="<?= $mhs_prodi ?>" class="px-3 py-2 mb-3 bg-[#F4F4F4] rounded-xl w-full" readonly />
+                                <div class="mt-40 mb-36 ps-80">
                                 <button type="submit" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Simpan</button>
+                            </div>
                             </div>
                         </form>
                     </div>

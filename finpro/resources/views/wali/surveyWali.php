@@ -1,8 +1,7 @@
-<?php 
+<?php
 session_start();
-if (!isset($_SESSION["nama"]))
-{
-header("location: ../index.php");
+if (!isset($_SESSION["nama"])) {
+    header("location: ../index.php");
 }
 
 $servername = "localhost";
@@ -44,7 +43,7 @@ if ($conn->connect_error) {
             </div>
         </div>
         <div class="text-sm text-end mt-10">
-        <h1><b><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></b></h1>
+            <h1><b><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></b></h1>
         </div>
         <hr>
     </div>
@@ -77,7 +76,6 @@ if ($conn->connect_error) {
         <!--DIV KANAN-->
         <div class="col-span-4">
             <h1 class="font-bold text-5xl mt-20 mb-10 px-10">Pilih Penilaian</h1>
-            
             <!--KONTEN-->
             <ul class="grid grid-rows-3 gap-3 text-sm  px-10">
                 <!--FASILITAS-->
@@ -85,38 +83,8 @@ if ($conn->connect_error) {
                     <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
                         <img src="../aset/Facility.svg">
                         <div>
-                            <h1 class="font-bold text-xl">Penilaian Fasilitas</h1>
-                            <p class="text-xs font-bold">Berikan Penilaian anda untuk fasilitas pada kampus Polinema</p>
-                        </div>
-                    </li>
-                </a>
-                <!--DOSEN-->
-                <a class="w-full" href="penilaianDosen_Wali.php">
-                    <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                        <img src="../aset/Kurikulum.svg">
-                        <div>
-                            <h1 class="font-bold text-xl">Penilaian Dosen</h1>
-                            <p class="text-xs font-bold">Berikan Penilaian anda untuk Kinerja para dosen di Polinema</p>
-                        </div>
-                    </li>
-                </a>
-                <!--SISTEM-->
-                <a class="w-full" href="penilaianSistem_Wali.php">
-                    <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                        <img src="../aset/Sistem.svg">
-                        <div>
-                            <h1 class="font-bold text-xl">Penilaian Sistem</h1>
-                            <p class="text-xs font-bold">Berikan Penilaian anda untuk sistem yang digunakan kampus polinema</p>
-                        </div>
-                    </li>
-                </a>
-                <!--KURIKULUM-->
-                <a class="w-full" href="penilaianKurikulum_Wali.php">
-                    <li class="flex items-center justify-start gap-4 w-full px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                        <img src="../aset/kurikulum1.svg">
-                        <div>
-                            <h1 class="font-bold text-xl">Penilaian Kurikulum</h1>
-                            <p class="text-xs font-bold">Berikan Penilaian anda untuk Kurikulum Yang ada di Kampus Polinema</p>
+                            <h1 class="font-bold text-xl">Penilaian Fasilitas dan Layanan</h1>
+                            <p class="text-xs font-bold">Berikan Penilaian anda untuk Fasilitas dan Layanan pada kampus Polinema</p>
                         </div>
                     </li>
                 </a>

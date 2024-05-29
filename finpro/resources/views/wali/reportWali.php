@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 }
 
 
-$sql = "SELECT * FROM t_responden_wali r INNER JOIN m_kategori k ON r.id_kategori = k.id_kategori WHERE responden_nama = '" . $_SESSION['nama']."';";
+$sql = "SELECT * FROM t_responden_ortu r INNER JOIN m_kategori k ON r.id_kategori = k.id_kategori WHERE responden_nama = '" . $_SESSION['nama']."';";
 $result = $conn->query($sql);
 
 ?>
