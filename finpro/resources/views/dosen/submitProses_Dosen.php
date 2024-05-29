@@ -18,21 +18,25 @@ if ($conn->connect_error) {
 
 $GET_['id_survey'] = 2;
 
+$id_survey = 2;
+
 if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['saran']) && isset($_POST['id_kategori'])) {
     $id_survey = $_POST['id_survey'];
     $nama = $_SESSION['nama'];
     $saran = $_POST['saran'];
     $id_kategori = $_POST['id_kategori'];
 
-    $stmt = $conn->prepare("INSERT INTO t_responden_dosen (id_responden_dosen, id_survey,  responden_tanggal , responden_nip,  responden_nama , responden_unit, saran,id_kategori) VALUES (null, ?, NOW(),null , ?,null , ?,?)");
+    $resultUserData = $conn->query("SELECT * FROM r_dosen WHERE dosen_nama = '". $nama ."';");
+    $row = $resultUserData->fetch_assoc();
 
-    $stmt->bind_param("issi",  $id_survey, $nama, $saran,$id_kategori);
+    $stmt = $conn->prepare("INSERT INTO t_responden_dosen (id_responden_dosen, id_survey, responden_tanggal, responden_nip, responden_nama, responden_unit, saran, id_kategori) VALUES (NULL, ?, NOW(), ?, ?, ?, ?, ?)");
+    $stmt->bind_param("issssi", $id_survey, $row['dosen_nip'], $nama, $row['dosen_unit'], $saran, $id_kategori);
     $status_execute = $stmt->execute();
 
     $new_id = $stmt->insert_id;
 
     if ($status_execute) {
-        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori'];
+        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori']  . " AND id_survey = " . $id_survey;
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {

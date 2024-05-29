@@ -122,7 +122,7 @@ $conn->close();
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">NIM</p>
             <input type="text" name="nim" placeholder="Masukkan NIM" class="w-full border px-4 rounded-lg text-sm h-10">
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Program Studi</p>
-            <select name="prodi" class="w-full border px-4 rounded-lg text-sm h-10 mt-4">
+            <select name="prodi" class="w-full border px-4 rounded-lg text-sm h-10 mt-2">
                 <option value="">Pilih Program Studi</option>
                 <option value="Teknik Informatika">Teknik Informatika</option>
                 <option value="Sistem Informasi Bisnis">Sistem Informasi Bisnis</option>

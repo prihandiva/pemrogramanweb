@@ -43,9 +43,9 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
     }
 }
 
-if (isset($_POST['nip']) && isset($_POST['unit'])) {
+if (isset($_POST['nopeg']) && isset($_POST['unit'])) {
     $responden_id_user = $_POST['id_user'];
-    $responden_nip = $_POST['nip'];
+    $responden_nopeg = $_POST['nopeg'];
     $responden_nama = $_POST['nama'];
     $responden_unit = $_POST['unit'];
 
@@ -54,7 +54,7 @@ if (isset($_POST['nip']) && isset($_POST['unit'])) {
     $responden_nip = mysqli_real_escape_string($conn, $responden_nip);
     $responden_unit = mysqli_real_escape_string($conn, $responden_unit);
 
-    $sql2 = "INSERT INTO r_dosen (dosen_nip, dosen_nama, dosen_unit, id_user) VALUES ('$responden_nip', '$responden_nama', '$responden_unit', '$responden_id_user')";
+    $sql2 = "INSERT INTO r_tendik (tendik_nopeg, tendik_nama, tendik_unit, id_user) VALUES ('$responden_nopeg', '$responden_nama', '$responden_unit', '$responden_id_user')";
 
     echo "SQL2: " . $sql2 . "<br>"; // Debugging
 
@@ -113,8 +113,8 @@ $conn->close();
         <form action="" method="post">
             <input type="text" name="id_user" value="<?= $id_user ?>" hidden>
             <input type="text" value="<?= $nama ?>" name="nama" hidden>
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">NIP</p>
-            <input type="text" name="nip" placeholder="Masukkan NIP" class="w-full border px-4 rounded-lg text-sm h-10">
+            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">No Pegawai</p>
+            <input type="text" name="nopeg" placeholder="Masukkan NIP" class="w-full border px-4 rounded-lg text-sm h-10">
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Unit</p>
             <select name="unit" class="w-full border px-4 rounded-lg text-sm h-10 mt-4">
                                 <option value="">Pilih Unit</option>

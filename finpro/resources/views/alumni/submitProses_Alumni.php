@@ -17,7 +17,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 $nama = $_SESSION['nama'];
-$id_survey = $_SESSION['id_survey'];
+$GET_['id_survey'] = 6;
+$id_survey = 6;
 
 if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['saran']) && isset($_POST['id_kategori'])) {
     $id_survey = $_POST['id_survey'];
@@ -28,17 +29,17 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
 
     $resultUserData = $conn->query("SELECT * FROM r_alumni WHERE alumni_nama = '". $nama ."';");
     $row = $resultUserData->fetch_assoc();
-
+    
 
     $stmt = $conn->prepare("INSERT INTO t_responden_alumni (id_responden_alumni, id_survey,  responden_tanggal , responden_nim, responden_nama ,responden_prodi,responden_email,responden_hp,tahun_lulus, saran,id_kategori) VALUES (null,?,NOW(),?,?,?,?,?,?,?,?)");
 
-    $stmt->bind_param("isssssssi",  $id_survey, $row['alumnni_nim'], $nama,$row['alumni_prodi'],$row['alumni_email'],$row['alumni_hp'],$row['alumni_tahunkeluar'], $saran, $id_kategori);
+    $stmt->bind_param("isssssssi",  $id_survey, $row['alumni_nim'], $nama,$row['alumni_prodi'],$row['alumni_email'],$row['alumni_hp'],$row['alumni_tahunlulus'], $saran, $id_kategori);
     $status_execute = $stmt->execute();
 
     $new_id = $stmt->insert_id;
 
     if ($status_execute) {
-        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori'];
+        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori']  . " AND id_survey = " . $id_survey;
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {

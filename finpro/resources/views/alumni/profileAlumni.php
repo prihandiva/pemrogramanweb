@@ -59,7 +59,7 @@ if ($result->num_rows > 0) {
     $prodi = $row['alumni_prodi'];
     $email = $row['alumni_email'];
     $nohp = $row['alumni_hp'];
-    $tahunkeluar = $row['alumni_tahunkeluar'];
+    $tahunkeluar = $row['alumni_tahunlulus'];
 } else {
     echo "Tidak ada data Alumni ditemukan.";
     exit();
@@ -208,7 +208,7 @@ $conn->close();
                                 <input type="text" name="nohp" id="nohp" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nohp); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
                             </div>
                             <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Tahun Masuk</p>
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Tahun Keluar</p>
                                 <input type="text" name="tahunkeluar" id="tahunkeluar" class="form-control pb-2 px-2" value="<?= htmlspecialchars($tahunkeluar); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="mt-40 mb-36 ps-80">

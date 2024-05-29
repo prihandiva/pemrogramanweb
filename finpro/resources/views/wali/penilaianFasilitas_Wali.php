@@ -16,6 +16,7 @@ if ($conn->connect_error) {
 }
 /// Set id_kategori ke dalam session
 $_SESSION['id_kategori'] = 1;
+$_SESSION['id_survey'] = 3;
 
 // Check apakah session 'nama' sudah diset
 if (isset($_SESSION['nama'])) {
@@ -29,9 +30,6 @@ if (isset($_SESSION['nama'])) {
 $sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 1 && s.id_survey=3;";
 $result = $conn->query($sql);
 ?>
-
-
-
 
 
 

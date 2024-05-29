@@ -6,7 +6,7 @@ include "koneksi.php"; // Mengimpor file koneksi.php
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
+    echo "test";
     // Melindungi dari SQL Injection
     $username = mysqli_real_escape_string($conn, $username);
     $password = mysqli_real_escape_string($conn, $password);
@@ -18,8 +18,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         $_SESSION['id_user'] = $row['id_user'];
         $_SESSION['nama'] = $row['nama'];
-        $_SESSION['user_type'] = 'Mahasiswa'; // Contoh user type
-        header("Location: profileMahasiswa.php");
+        $_SESSION['user_type'] = 'Mitra'; // Contoh user type
+        header("Location: profileMitra.php");
         exit();
     } else {
         echo "Username atau password salah.";
@@ -45,34 +45,34 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-echo $id_user;
 
-// Query untuk mendapatkan data mahasiswa berdasarkan id_user
-$sql = "SELECT * FROM r_mhs WHERE id_user = $id_user";
+
+// Query untuk mendapatkan data mitra berdasarkan id_user
+$sql = "SELECT * FROM r_industri WHERE id_user = $id_user";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    // Mendapatkan data mahasiswa
-    $nim = $row['mhs_nim'];
-    $nama = $row['mhs_nama'];
-    $prodi = $row['mhs_prodi'];
-    $email = $row['mhs_email'];
-    $nohp = $row['mhs_hp'];
-    $tahunmasuk = $row['mhs_tahunmasuk'];
+    // Mendapatkan data mitra
+    $jabatan = $row['industri_jabatan'];
+    $nama = $row['industri_nama'];
+    $perusahaan = $row['industri_perusahaan'];
+    $email = $row['industri_email'];
+    $nohp = $row['industri_hp'];
+    $kota = $row['industri_kota'];
 } else {
-    echo "Tidak ada data mahasiswa ditemukan.";
+    echo "Tidak ada data mitra ditemukan.";
     exit();
 }
 
 // Proses update data
 if (isset($_POST['email']) && isset($_POST['nohp'])) {
-    $mhs_email = $_POST['email'];
-    $mhs_nohp = $_POST['nohp'];
+    $industri_email = $_POST['email'];
+    $industri_nohp = $_POST['nohp'];
 
-    $sql = "UPDATE r_mhs SET mhs_email = ?, mhs_hp = ? WHERE id_user = ?";
+    $sql = "UPDATE r_industri SET industri_email = ?, industri_hp = ? WHERE id_user = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $mhs_email, $mhs_nohp, $id_user);
+    $stmt->bind_param("ssi", $industri_email, $industri_nohp, $id_user);
     if ($stmt->execute()) {
         echo "Data berhasil diperbarui.";
     } else {
@@ -165,16 +165,16 @@ $conn->close();
         <div class="left bg-[#130B2d] py-20 relative">
             <ul class="grid grid-rows-3 gap-3 text-center text-sm items-center justify-center">
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="dashboardMahasiswa.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
+                    <a class="flex items-center gap-3" href="dashboardMitra.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="surveyMahasiswa.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
+                    <a class="flex items-center gap-3" href="surveyMitra.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="reportMahasiswa.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
+                    <a class="flex items-center gap-3" href="reportMitra.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2685F5] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="profileMahasiswa.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
+                    <a class="flex items-center gap-3" href="profileMitra.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#423C57] font-bold text-white rounded-xl">
                     <a class="flex items-center gap-3" href="../logout.php"><img src="../aset/Logout.svg" class="w-10" /><span>LOG OUT</span></a>
@@ -186,18 +186,18 @@ $conn->close();
             <div class="flex">
                 <div class="card-container flex">
                     <div class="flex justify-end">
-                        <form action="profileMahasiswa.php" method="POST">
+                        <form action="profileMitra.php" method="POST">
                             <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIM</p>
-                                <input type="text" name="nim" id="nim" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nim); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Jabatan</p>
+                                <input type="text" name="jabatan" id="jabatan" class="form-control pb-2 px-2" value="<?= htmlspecialchars($jabatan); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="form">
                                 <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Lengkap</p>
                                 <input type="text" name="nama" id="nama" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nama); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Program Studi</p>
-                                <input type="text" name="prodi" id="prodi" class="form-control pb-2 px-2" value="<?= htmlspecialchars($prodi); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Perusahaan</p>
+                                <input type="text" name="perusahaan" id="perusahaan" class="form-control pb-2 px-2" value="<?= htmlspecialchars($perusahaan); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="form">
                                 <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Email</p>
@@ -208,8 +208,8 @@ $conn->close();
                                 <input type="text" name="nohp" id="nohp" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nohp); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
                             </div>
                             <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Tahun Masuk</p>
-                                <input type="text" name="tahunmasuk" id="tahunmasuk" class="form-control pb-2 px-2" value="<?= htmlspecialchars($tahunmasuk); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">kota</p>
+                                <input type="text" name="kota" id="kota" class="form-control pb-2 px-2" value="<?= htmlspecialchars($kota); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="mt-40 mb-36 ps-80">
                                 <button type="submit" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Simpan</button>

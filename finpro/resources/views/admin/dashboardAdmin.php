@@ -143,6 +143,7 @@ if ($conn->connect_error) {
             </div>
             <div class="flex justify-center mt-20">
                 <div class="w-1/2">
+                    <h1 class="font-bold text-center text-2xl">DIAGRAM JUMLAH RESPONDEN</h1>
                     <canvas id="myChart"></canvas>
                 </div>
             </div>

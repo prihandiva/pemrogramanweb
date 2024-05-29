@@ -58,6 +58,7 @@ if ($result->num_rows > 0) {
             $_SESSION['username'] = $username; // Simpan username ke sesi
             $_SESSION['user_type'] = $user_status; // Simpan user_status ke sesi
             $_SESSION['nama'] = $row['nama']; // simpan nama user ke sesi
+            $_SESSION['id_user'] = $row['id_user']; // simpan id_user ke sesi
             echo "success";
             header("Location: dosen/dashboardDosen.php");
         exit();
@@ -66,6 +67,7 @@ if ($result->num_rows > 0) {
             $_SESSION['username'] = $username; // Simpan username ke sesi
             $_SESSION['user_type'] = $user_status; // Simpan user_status ke sesi
             $_SESSION['nama'] = $row['nama']; // simpan nama user ke sesi
+            $_SESSION['id_user'] = $row['id_user']; // simpan id_user ke sesi
             echo "success";
             header("Location: admin/dashboardAdmin.php");
         exit();
@@ -74,6 +76,7 @@ if ($result->num_rows > 0) {
             $_SESSION['username'] = $username; // Simpan username ke sesi
             $_SESSION['user_type'] = $user_status; // Simpan user_status ke sesi
             $_SESSION['nama'] = $row['nama']; // simpan nama user ke sesi
+            $_SESSION['id_user'] = $row['id_user']; // simpan id_user ke sesi
             echo "success";
             header("Location: wali/dashboardWali.php");
         exit();
@@ -82,7 +85,7 @@ if ($result->num_rows > 0) {
             $_SESSION['username'] = $username; // Simpan username ke sesi
             $_SESSION['user_type'] = $user_status; // Simpan user_status ke sesi
             $_SESSION['nama'] = $row['nama']; // simpan nama user ke sesi
-
+            $_SESSION['id_user'] = $row['id_user']; // simpan id_user ke sesi
             echo "success";
             header("Location: alumni/dashboardAlumni.php");
         exit();
@@ -91,7 +94,7 @@ if ($result->num_rows > 0) {
             $_SESSION['username'] = $username; // Simpan username ke sesi
             $_SESSION['user_type'] = $user_status; // Simpan user_status ke sesi
             $_SESSION['nama'] = $row['nama']; // simpan nama user ke sesi
-
+            $_SESSION['id_user'] = $row['id_user']; // simpan id_user ke sesi
             echo "success";
             header("Location: mitra/dashboardMitra.php");
         exit();
@@ -100,7 +103,7 @@ if ($result->num_rows > 0) {
             $_SESSION['username'] = $username; // Simpan username ke sesi
             $_SESSION['user_type'] = $user_status; // Simpan user_status ke sesi
             $_SESSION['nama'] = $row['nama']; // simpan nama user ke sesi
-
+            $_SESSION['id_user'] = $row['id_user']; // simpan id_user ke sesi
             echo "success";
             header("Location: tendik/dashboardTendik.php");
         exit();

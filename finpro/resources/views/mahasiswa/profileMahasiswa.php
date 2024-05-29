@@ -6,7 +6,7 @@ include "koneksi.php"; // Mengimpor file koneksi.php
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
+    echo "test";
     // Melindungi dari SQL Injection
     $username = mysqli_real_escape_string($conn, $username);
     $password = mysqli_real_escape_string($conn, $password);
@@ -45,7 +45,7 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-echo $id_user;
+
 
 // Query untuk mendapatkan data mahasiswa berdasarkan id_user
 $sql = "SELECT * FROM r_mhs WHERE id_user = $id_user";

@@ -17,7 +17,8 @@ $conn = new mysqli($servername, $username_db, $password_db, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+$GET_['id_survey'] = 5;
+$id_survey = 5;
 
 if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['saran']) && isset($_POST['id_kategori'])) {
     $id_survey = $_POST['id_survey'];
@@ -25,17 +26,19 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
     $saran = $_POST['saran'];
     $id_kategori = $_POST['id_kategori'];
 
-    $stmt = $conn->prepare("INSERT INTO t_responden_industri (id_responden_industri, id_survey,  responden_tanggal , responden_nip,  responden_nama , responden_unit, saran,id_kategori) VALUES (null, ?, NOW(),null , ?,null , ?,?)");
+    $resultUserData = $conn->query("SELECT * FROM r_industri WHERE industri_nama = '". $nama ."';");
+    $row = $resultUserData->fetch_assoc();
 
-    $stmt->bind_param("issi",  $id_survey, $nama, $saran,$id_kategori);
+    $stmt = $conn->prepare("INSERT INTO t_responden_industri (id_responden_industri, id_survey,  responden_tanggal , responden_nama,responden_jabatan ,responden_perusahaan,responden_email,responden_hp,responden_kota, saran,id_kategori) VALUES (null,?,NOW(),?,?,?,?,?,?,?,?)");
+
+    $stmt->bind_param("isssssssi",  $id_survey, $nama,$row['industri_jabatan'], $row['industri_perusahaan'],$row['industri_email'],$row['industri_hp'],$row['industri_kota'], $saran, $id_kategori);
     $status_execute = $stmt->execute();
-
 
     $new_id = $stmt->insert_id;
 
 
     if ($status_execute) {
-        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori'];
+        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori']  . " AND id_survey = " . $id_survey;
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {

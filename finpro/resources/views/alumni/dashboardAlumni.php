@@ -19,7 +19,6 @@ if ($conn->connect_error) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,9 +47,8 @@ if ($conn->connect_error) {
                 </div>
             </div>
         </div>
-        <div class="text-sm text-end mt-10">
-            
-            <h1><?=$_SESSION['nama']?> | <?=$_SESSION['posisi']?></h1> <!--HARUSNYA NAMPILIN NAMA + POSISI-->
+        <div class="text-sm text-end mt-10"> 
+        <h1><b><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></b></h1> <!--HARUSNYA NAMPILIN NAMA + POSISI-->
         </div>
     </div>
     <hr class="border-2 border-black" />

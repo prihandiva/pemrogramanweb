@@ -43,34 +43,34 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
     }
 }
 
-if (isset($_POST['nim']) && isset($_POST['prodi']) && isset($_POST['email']) && isset($_POST['nohp']) && isset($_POST['tahunmasuk']) && isset($_POST['id_user'])) {
+if (isset($_POST['jabatan']) && isset($_POST['perusahaan']) && isset($_POST['email']) && isset($_POST['nohp']) && isset($_POST['kota']) && isset($_POST['id_user'])) {
     $responden_id_user = $_POST['id_user'];
-    $responden_nim = $_POST['nim'];
     $responden_nama = $_POST['nama'];
-    $responden_prodi = $_POST['prodi'];
+    $responden_jabatan = $_POST['jabatan'];
+    $responden_perusahaan = $_POST['perusahaan'];
     $responden_email = $_POST['email'];
     $responden_hp = $_POST['nohp'];
-    $tahun_masuk = $_POST['tahunmasuk'];
+    $responden_kota = $_POST['kota'];
 
     // Melindungi dari SQL Injection
-    $responden_nim = mysqli_real_escape_string($conn, $responden_nim);
-    $responden_prodi = mysqli_real_escape_string($conn, $responden_prodi);
+    $responden_jabatan = mysqli_real_escape_string($conn, $responden_jabatan);
+    $responden_perusahaan = mysqli_real_escape_string($conn, $responden_perusahaan);
     $responden_email = mysqli_real_escape_string($conn, $responden_email);
     $responden_hp = mysqli_real_escape_string($conn, $responden_hp);
-    $tahun_masuk = mysqli_real_escape_string($conn, $tahun_masuk);
+    $responden_kota = mysqli_real_escape_string($conn, $responden_kota);
 
-    $sql2 = "INSERT INTO r_mhs (mhs_nim, mhs_nama, mhs_prodi, mhs_email, mhs_hp, mhs_tahunmasuk, id_user) VALUES ('$responden_nim', '$responden_nama', '$responden_prodi', '$responden_email', '$responden_hp', '$tahun_masuk', '$responden_id_user')";
+    $sql2 = "INSERT INTO r_industri (industri_nama, industri_jabatan,industri_perusahaan ,industri_email, industri_hp, industri_kota, id_user) VALUES ('$responden_nama', '$responden_jabatan', '$responden_perusahaan', '$responden_email', '$responden_hp', '$responden_kota', '$responden_id_user')";
 
     echo "SQL2: " . $sql2 . "<br>"; // Debugging
 
     $resultRegister = $conn->query($sql2);
 
     if ($resultRegister === TRUE) {
-        echo "Akun mahasiswa berhasil didaftarkan.";
+        echo "Akun mitra berhasil didaftarkan.";
         header("Location: ../index.php");
         exit();
     } else {
-        echo "Error inserting into r_mhs: " . $sql2 . "<br>" . $conn->error;
+        echo "Error inserting into r_industri: " . $sql2 . "<br>" . $conn->error;
     }
 }
 $conn->close();
@@ -118,16 +118,16 @@ $conn->close();
         <form action="" method="post">
             <input type="text" name="id_user" value="<?= $id_user ?>" hidden>
             <input type="text" value="<?= $nama ?>" name="nama" hidden>
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">NIM</p>
-            <input type="text" name="nim" placeholder="Masukkan NIM" class="w-full border px-4 rounded-lg text-sm h-10">
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Program Studi</p>
-            <input type="text" name="prodi" placeholder="Masukkan Prodi" class="w-full border px-4 rounded-lg text-sm h-10">
+            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Jabatan</p>
+            <input type="text" name="jabatan" placeholder="Masukkan Jabatan" class="w-full border px-4 rounded-lg text-sm h-10">
+            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Nama Perusahaan</p>
+            <input type="text" name="perusahaan" placeholder="Masukkan Nama Perusahaan" class="w-full border px-4 rounded-lg text-sm h-10">
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Email</p>
             <input type="email" name="email" placeholder="Masukkan Email" class="w-full border px-4 rounded-lg text-sm h-10">
             <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Nomor HP</p>
             <input type="text" name="nohp" placeholder="Masukkan Nomor Handphone" class="w-full border px-4 rounded-lg text-sm h-10">
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Tahun Masuk</p>
-            <input type="text" name="tahunmasuk" placeholder="Masukkan Tahun Masuk" class="w-full border px-4 rounded-lg text-sm h-10">
+            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Kota</p>
+            <input type="text" name="kota" placeholder="Masukkan Kota" class="w-full border px-4 rounded-lg text-sm h-10">
             <div class="bg-[#2D1B6B] w-full py-2 text-center rounded-md mt-4">
                 <button type="submit" class="text-white font-bold">Buat Akun Baru</button>
             </div>

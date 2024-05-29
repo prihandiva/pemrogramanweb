@@ -1,7 +1,6 @@
 <?php
 session_start();
-include "koneksi.php"; // Mengimpor file koneksi.php
-
+include "koneksi.php";
 // Proses login
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
@@ -18,8 +17,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         $_SESSION['id_user'] = $row['id_user'];
         $_SESSION['nama'] = $row['nama'];
-        $_SESSION['user_type'] = 'Dosen'; // Contoh user type
-        header("Location: profileDosen.php");
+        $_SESSION['user_type'] = 'Tenaga Pendidikan';
+        header("Location: profileTendik.php");
         exit();
     } else {
         echo "Username atau password salah.";
@@ -45,40 +44,21 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-echo $id_user;
 
-// Query untuk mendapatkan data Dosen berdasarkan id_user
-$sql = "SELECT * FROM r_dosen WHERE id_user = $id_user";
+
+// Query untuk mendapatkan data Tendik berdasarkan id_user
+$sql = "SELECT * FROM r_tendik WHERE id_user = $id_user";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    // Mendapatkan data Dosen
-    $nim = $row['dosen_nim'];
-    $nama = $row['dosen_nama'];
-    $prodi = $row['dosen_prodi'];
-    $email = $row['dosen_email'];
-    $nohp = $row['dosen_hp'];
-    $tahunmasuk = $row['dosen_tahunmasuk'];
+    // Mendapatkan data Tendik
+    $nopeg = $row['tendik_nopeg'];
+    $nama = $row['tendik_nama'];
+    $unit = $row['tendik_unit'];
 } else {
-    echo "Tidak ada data Dosen ditemukan.";
+    echo "Tidak ada data Tendik ditemukan.";
     exit();
-}
-
-// Proses update data
-if (isset($_POST['email']) && isset($_POST['nohp'])) {
-    $dosen_email = $_POST['email'];
-    $dosen_nohp = $_POST['nohp'];
-
-    $sql = "UPDATE r_dosen SET dosen_email = ?, dosen_hp = ? WHERE id_user = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $dosen_email, $dosen_nohp, $id_user);
-    if ($stmt->execute()) {
-        echo "Data berhasil diperbarui.";
-    } else {
-        echo "Terjadi kesalahan: " . $stmt->error;
-    }
-    $stmt->close();
 }
 
 $conn->close();
@@ -165,16 +145,16 @@ $conn->close();
         <div class="left bg-[#130B2d] py-20 relative">
             <ul class="grid grid-rows-3 gap-3 text-center text-sm items-center justify-center">
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="dashboardDosen.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
+                    <a class="flex items-center gap-3" href="dashboardTendik.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="surveyDosen.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
+                    <a class="flex items-center gap-3" href="surveyTendik.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="reportDosen.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
+                    <a class="flex items-center gap-3" href="reportTendik.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2685F5] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="profileDosen.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
+                    <a class="flex items-center gap-3" href="profileTendik.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#423C57] font-bold text-white rounded-xl">
                     <a class="flex items-center gap-3" href="../logout.php"><img src="../aset/Logout.svg" class="w-10" /><span>LOG OUT</span></a>
@@ -186,31 +166,20 @@ $conn->close();
             <div class="flex">
                 <div class="card-container flex">
                     <div class="flex justify-end">
-                        <form action="profileDosen.php" method="POST">
+                        <form action="profileTendik.php" method="POST">
                             <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIM</p>
-                                <input type="text" name="nim" id="nim" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nim); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">No Pegawai</p>
+                                <input type="text" name="nopeg" id="nopeg" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nopeg); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="form">
                                 <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Lengkap</p>
                                 <input type="text" name="nama" id="nama" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nama); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Program Studi</p>
-                                <input type="text" name="prodi" id="prodi" class="form-control pb-2 px-2" value="<?= htmlspecialchars($prodi); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Unit Kerja</p>
+                                <input type="text" name="unit" id="unit" class="form-control pb-2 px-2" value="<?= htmlspecialchars($unit); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Email</p>
-                                <input type="email" name="email" id="email" class="form-control pb-2 px-2" value="<?= htmlspecialchars($email); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
-                            </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nomor HP</p>
-                                <input type="text" name="nohp" id="nohp" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nohp); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
-                            </div>
-                            <div class="form">
-                                <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Tahun Masuk</p>
-                                <input type="text" name="tahunmasuk" id="tahunmasuk" class="form-control pb-2 px-2" value="<?= htmlspecialchars($tahunmasuk); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
-                            </div>
+                            
                             <div class="mt-40 mb-36 ps-80">
                                 <button type="submit" class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Simpan</button>
                             </div>
@@ -219,7 +188,7 @@ $conn->close();
                     <div class="circle" style="margin-top: 20px; margin-left: 100px;">
                         <img src="../aset/lambang-polinema1.png" alt="Placeholder Image" width="250" height="285">
                         <div class="photo-caption">
-                            <button class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Dosen</button>
+                            <button class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Tendik</button>
                         </div>
                     </div>
                 </div>

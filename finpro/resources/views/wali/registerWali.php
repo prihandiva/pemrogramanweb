@@ -36,46 +36,55 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
         $id_user = $conn->insert_id;
 
         echo "User ID: " . $id_user . "<br>"; // Debugging
-
-       
     } else {
         echo "Error inserting into m_user: " . $sql . "<br>" . $conn->error;
     }
 }
 
-if (isset($_POST['nim']) && isset($_POST['prodi']) && isset($_POST['email']) && isset($_POST['nohp']) && isset($_POST['tahunmasuk']) && isset($_POST['id_user'])) {
+if (isset($_POST['ortu_nama']) && isset($_POST['ortu_jk']) && isset($_POST['ortu_umur']) && isset($_POST['ortu_hp']) && isset($_POST['ortu_pendidikan']) && isset($_POST['ortu_pekerjaan']) && isset($_POST['ortu_penghasilan']) && isset($_POST['mhs_nim']) && isset($_POST['mhs_nama']) && isset($_POST['mhs_prodi'])&& isset($_POST['id_user'])) {
     $responden_id_user = $_POST['id_user'];
-    $responden_nim = $_POST['nim'];
-    $responden_nama = $_POST['nama'];
-    $responden_prodi = $_POST['prodi'];
-    $responden_email = $_POST['email'];
-    $responden_hp = $_POST['nohp'];
-    $tahun_masuk = $_POST['tahunmasuk'];
+    $responden_nama = $_POST['ortu_nama'];
+    $responden_jk = $_POST['ortu_jk'];
+    $responden_umur = $_POST['ortu_umur'];
+    $responden_hp = $_POST['ortu_hp'];
+    $responden_pendidikan = $_POST['ortu_pendidikan'];
+    $responden_pekerjaan = $_POST['ortu_pekerjaan'];
+    $responden_penghasilan = $_POST['ortu_penghasilan'];
+    $mhs_nim = $_POST['mhs_nim'];
+    $mhs_nama = $_POST['mhs_nama'];
+    $mhs_prodi = $_POST['mhs_prodi'];
 
     // Melindungi dari SQL Injection
-    $responden_nim = mysqli_real_escape_string($conn, $responden_nim);
-    $responden_prodi = mysqli_real_escape_string($conn, $responden_prodi);
-    $responden_email = mysqli_real_escape_string($conn, $responden_email);
+    $responden_nama = mysqli_real_escape_string($conn, $responden_nama);
+    $responden_jk = mysqli_real_escape_string($conn, $responden_jk);
+    $responden_umur = mysqli_real_escape_string($conn, $responden_umur);
     $responden_hp = mysqli_real_escape_string($conn, $responden_hp);
-    $tahun_masuk = mysqli_real_escape_string($conn, $tahun_masuk);
+    $responden_pendidikan = mysqli_real_escape_string($conn, $responden_pendidikan);
+    $responden_pekerjaan = mysqli_real_escape_string($conn, $responden_pekerjaan);
+    $responden_penghasilan = mysqli_real_escape_string($conn, $responden_penghasilan);
+    $mhs_nim = mysqli_real_escape_string($conn, $mhs_nim);
+    $mhs_nama = mysqli_real_escape_string($conn, $mhs_nama);
+    $mhs_prodi = mysqli_real_escape_string($conn, $mhs_prodi);
 
-    $sql2 = "INSERT INTO r_mhs (mhs_nim, mhs_nama, mhs_prodi, mhs_email, mhs_hp, mhs_tahunmasuk, id_user) VALUES ('$responden_nim', '$responden_nama', '$responden_prodi', '$responden_email', '$responden_hp', '$tahun_masuk', '$responden_id_user')";
+    // Query untuk memasukkan data ke dalam tabel r_ortu
+    $sql2 = "INSERT INTO r_ortu (id_user, ortu_nama, ortu_jk, ortu_umur, ortu_hp, ortu_pendidikan, ortu_pekerjaan, ortu_penghasilan, mhs_nim, mhs_nama, mhs_prodi) VALUES ('$responden_id_user', '$responden_nama', '$responden_jk', '$responden_umur', '$responden_hp', '$responden_pendidikan', '$responden_pekerjaan', '$responden_penghasilan', '$mhs_nim', '$mhs_nama', '$mhs_prodi')";
 
     echo "SQL2: " . $sql2 . "<br>"; // Debugging
 
     $resultRegister = $conn->query($sql2);
 
     if ($resultRegister === TRUE) {
-        echo "Akun mahasiswa berhasil didaftarkan.";
+        echo "Akun Wali mahasiswa berhasil didaftarkan.";
         header("Location: ../index.php");
         exit();
     } else {
-        echo "Error inserting into r_mhs: " . $sql2 . "<br>" . $conn->error;
+        echo "Error inserting into r_ortu: " . $sql2 . "<br>" . $conn->error;
     }
 }
 $conn->close();
-
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -116,29 +125,67 @@ $conn->close();
         </div>
         <!---->
         <form action="" method="post">
-            <input type="text" name="id_user" value="<?= $id_user ?>" hidden>
-            <input type="text" value="<?= $nama ?>" name="nama" hidden>
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">NIM</p>
-            <input type="text" name="nim" placeholder="Masukkan NIM" class="w-full border px-4 rounded-lg text-sm h-10">
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Program Studi</p>
-            <input type="text" name="prodi" placeholder="Masukkan Prodi" class="w-full border px-4 rounded-lg text-sm h-10">
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Email</p>
-            <input type="email" name="email" placeholder="Masukkan Email" class="w-full border px-4 rounded-lg text-sm h-10">
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Nomor HP</p>
-            <input type="text" name="nohp" placeholder="Masukkan Nomor Handphone" class="w-full border px-4 rounded-lg text-sm h-10">
-            <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Tahun Masuk</p>
-            <input type="text" name="tahunmasuk" placeholder="Masukkan Tahun Masuk" class="w-full border px-4 rounded-lg text-sm h-10">
-            <div class="bg-[#2D1B6B] w-full py-2 text-center rounded-md mt-4">
-                <button type="submit" class="text-white font-bold">Buat Akun Baru</button>
-            </div>
-        </form>
+    <input type="text" name="id_user" value="<?= $id_user ?>" hidden>
+    <input type="text" value="<?= $nama ?>" name="nama" hidden>
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Jenis Kelamin</p>
+    <select name="jk" class="w-full border px-4 rounded-lg text-sm h-10 mt-2">
+        <option value="">Pilih Jenis Kelamin</option>
+        <option value="L">Laki-laki</option>
+        <option value="P">Perempuan</option>
+    </select>
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Umur</p>
+    <input type="text" name="umur" placeholder="Masukkan Umur" class="w-full border px-4 rounded-lg text-sm h-10">
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Nomor HP</p>
+    <input type="text" name="hp" placeholder="Masukkan Nomor Handphone" class="w-full border px-4 rounded-lg text-sm h-10">
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Pendidikan</p>
+    <input type="text" name="pendidikan" placeholder="Masukkan Pendidikan" class="w-full border px-4 rounded-lg text-sm h-10">
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Pekerjaan</p>
+    <input type="text" name="pekerjaan" placeholder="Masukkan Pekerjaan" class="w-full border px-4 rounded-lg text-sm h-10">
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Penghasilan</p>
+    <input type="text" name="penghasilan" placeholder="Masukkan Penghasilan" class="w-full border px-4 rounded-lg text-sm h-10">
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">NIM Mahasiswa</p>
+    <input type="text" name="mhs_nim" placeholder="Masukkan NIM Mahasiswa" class="w-full border px-4 rounded-lg text-sm h-10">
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Nama Mahasiswa</p>
+    <input type="text" name="mhs_nama" placeholder="Masukkan Nama Mahasiswa" class="w-full border px-4 rounded-lg text-sm h-10">
+    
+    <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2 mt-2">Program Studi</p>
+    <select name="mhs_prodi" class="w-full border px-4 rounded-lg text-sm h-10 mt-2">
+        <option value="">Pilih Program Studi</option>
+        <option value="Teknik Informatika">Teknik Informatika</option>
+        <option value="Sistem Informasi Bisnis">Sistem Informasi Bisnis</option>
+        <option value="Teknik Elektronika">Teknik Elektronika</option>
+        <option value="Sistem Kelistrikan">Sistem Kelistrikan</option>
+        <option value="Jaringan Telekomunikasi Digital">Jaringan Telekomunikasi Digital</option>
+        <option value="Teknologi Kimia Industri">Teknologi Kimia Industri</option>
+        <option value="Teknik Otomotif Elektronik">Teknik Otomotif Elektronik</option>
+        <option value="Teknik Mesin Produksi Dan Perawatan">Teknik Mesin Produksi Dan Perawatan</option>
+        <option value="Manajemen Rekayasa Konstruksi">Manajemen Rekayasa Konstruksi</option>
+        <option value="Teknologi Rekayasa Konstruksi Jalan Dan Jembatan">Teknologi Rekayasa Konstruksi Jalan Dan Jembatan</option>
+        <option value="Akuntansi Manajemen">Akuntansi Manajemen</option>
+        <option value="Keuangan">Keuangan</option>
+        <option value="Manajemen Pemasaran">Manajemen Pemasaran</option>
+        <option value="Pengelolaan Arsip Dan Rekaman Informasi">Pengelolaan Arsip Dan Rekaman Informasi</option>
+        <option value="Usaha Perjalanan Wisata">Usaha Perjalanan Wisata</option>
+        <option value="Bahasa Inggris Untuk Komunikasi Bisnis Dan Profesional">Bahasa Inggris Untuk Komunikasi Bisnis Dan Profesional</option>
+        <option value="Bahasa Inggris Untuk Industri Pariwisata">Bahasa Inggris Untuk Industri Pariwisata</option>
+    </select>
+    
+    <div class="bg-[#2D1B6B] w-full py-2 text-center rounded-md mt-4">
+        <button type="submit" class="text-white font-bold">Buat Akun Baru</button>
+    </div>
+</form>
+
     </main>
 </body>
 </html>
-<?php
 
-
-
-?>
 
 

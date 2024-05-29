@@ -16,17 +16,19 @@ if ($conn->connect_error) {
 }
 /// Set id_kategori ke dalam session
 $_SESSION['id_kategori'] = 3;
+/// Set id_survey ke dalam session
+$_SESSION['id_survey'] = 4;
 
 // Check apakah session 'nama' sudah diset
 if (isset($_SESSION['nama'])) {
-    $sql = "SELECT * FROM t_responden_mhs WHERE id_kategori = 3 AND responden_nama = '" . $_SESSION['nama'] . "'" ;
+    $sql = "SELECT * FROM t_responden_tendik WHERE id_kategori = 3 AND responden_nama = '" . $_SESSION['nama'] . "'" ;
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        header("Location: sudahIsi_Mahasiswa.php");
+        header("Location: sudahIsi_Tendik.php");
         die();
     }
 }
-$sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 3;";
+$sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 3 && s.id_survey = 4;";
 $result = $conn->query($sql);
 ?>
 
@@ -75,16 +77,16 @@ $result = $conn->query($sql);
         <div class="left bg-[#130B2d] py-20 relative">
             <ul class="grid grid-rows-3 gap-3 text-center text-sm items-center justify-center">
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="dashboardMahasiswa.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
+                    <a class="flex items-center gap-3" href="dashboardTendik.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2685F5] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="surveyMahasiswa.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
+                    <a class="flex items-center gap-3" href="surveyTendik.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="reportMahasiswa.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
+                    <a class="flex items-center gap-3" href="reportTendik.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="profileMahasiswa.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
+                    <a class="flex items-center gap-3" href="profileTendik.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#423C57] font-bold text-white rounded-xl">
                     <a class="flex items-center gap-3" href="../logout.php"><img src="../aset/Logout.svg" class="w-10" /><span>LOG OUT</span></a>
@@ -96,7 +98,7 @@ $result = $conn->query($sql);
         <main class="col-span-4">
         <div class="bg-white p-8 rounded-xl shadow-md">
         <h1 class="text-6xl font-bold mb-6">Penilaian Sistem</h1>
-        <form action = "submitProses_Mahasiswa.php" method= "post">
+        <form action = "submitProses_Tendik.php" method= "post">
             <div class="grid gap-4 col-span-4">
                 <?php 
                 if ($result->num_rows > 0) {
@@ -140,7 +142,7 @@ $result = $conn->query($sql);
             </div>
             <div>
             <div class="flex justify-between w-full">
-            <button class="bg-white text-[#2D1B6B] border-[#2D1B6B] py-2 px-4 rounded-xl border-[#2D1B6B] border-4" type="back"><a href="surveyMahasiswa.php"><b>Survey Page</b></a></button>
+            <button class="bg-white text-[#2D1B6B] border-[#2D1B6B] py-2 px-4 rounded-xl border-[#2D1B6B] border-4" type="back"><a href="surveyTendik.php"><b>Survey Page</b></a></button>
             <button class="end-content bg-[#2D1B6B] text-white py-2 px-4 rounded-xl" type="submit">Simpan</button>
             </div>
             </div>

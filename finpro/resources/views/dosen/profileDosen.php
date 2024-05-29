@@ -17,7 +17,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         $_SESSION['id_user'] = $row['id_user'];
         $_SESSION['nama'] = $row['nama'];
-        $_SESSION['user_type'] = 'Dosen'; // Contoh user type
+        $_SESSION['user_type'] = 'Dosen';
         header("Location: profileDosen.php");
         exit();
     } else {
@@ -44,7 +44,7 @@ if ($conn->connect_error) {
     die("Koneksi gagal: " . $conn->connect_error);
 }
 
-echo $id_user;
+
 
 // Query untuk mendapatkan data Dosen berdasarkan id_user
 $sql = "SELECT * FROM r_dosen WHERE id_user = $id_user";
@@ -59,22 +59,6 @@ if ($result->num_rows > 0) {
 } else {
     echo "Tidak ada data Dosen ditemukan.";
     exit();
-}
-
-// Proses update data
-if (isset($_POST['unit'])) {
-    
-    $unit = $_POST['unit'];
-
-    $sql = "UPDATE r_dosen SET dosen_unit = ? WHERE id_user = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $dosen_unit, $id_user);
-    if ($stmt->execute()) {
-        echo "Data berhasil diperbarui.";
-    } else {
-        echo "Terjadi kesalahan: " . $stmt->error;
-    }
-    $stmt->close();
 }
 
 $conn->close();
@@ -185,7 +169,7 @@ $conn->close();
                         <form action="profileDosen.php" method="POST">
                             <div class="form">
                                 <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIP</p>
-                                <input type="text" name="nip" id="nip" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nim); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
+                                <input type="text" name="nip" id="nip" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nip); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             <div class="form">
                                 <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Nama Lengkap</p>
@@ -193,18 +177,7 @@ $conn->close();
                             </div>
                             <div class="form">
                                 <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">Unit Kerja</p>
-                                <select name="unit" class="w-full border px-4 rounded-lg text-sm h-10 mt-4">
-                                <option value="<?= htmlspecialchars($unit); ?>">Pilih Unit</option>
-                                <option value="Jurusan Teknologi Informasi">Jurusan Teknologi Informasi</option>
-                                <option value="Jurusan Administrasi Niaga">Jurusan Administrasi Niaga</option>
-                                <option value="Jurusan Akutansi">Jurusan Akutansi</option>
-                                <option value="Jurusan Teknik Kimia">Jurusan Teknik Kimia</option>
-                                <option value="Jurusan Teknik Elektro">Jurusan Teknik Elektro</option>
-                                <option value="Jurusan Teknik Mesin">Jurusan Teknik Mesin</option>
-                                <option value="Jurusan Teknik Sipil">Jurusan Teknik Sipil</option>
-                                <option value="Mata Kuliah Umum">Mata Kuliah Umum</option>
-                            </select>
-                                <input type="text" name="unit" id="unit" class="form-control pb-2 px-2" value="<?= htmlspecialchars($prodi); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;">
+                                <input type="text" name="unit" id="unit" class="form-control pb-2 px-2" value="<?= htmlspecialchars($unit); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
                             </div>
                             
                             <div class="mt-40 mb-36 ps-80">

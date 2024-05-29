@@ -16,17 +16,18 @@ if ($conn->connect_error) {
 }
 /// Set id_kategori ke dalam session
 $_SESSION['id_kategori'] = 5;
+$_SESSION['id_survey'] = 5;
 
 // Check apakah session 'nama' sudah diset
 if (isset($_SESSION['nama'])) {
-    $sql = "SELECT * FROM t_responden_industri WHERE id_kategori = 1 AND responden_nama = '" . $_SESSION['nama'] . "'";
+    $sql = "SELECT * FROM t_responden_industri WHERE id_kategori = 5 AND responden_nama = '" . $_SESSION['nama'] . "'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         header("Location: sudahIsi_Mitra.php");
         die();
     }
 }
-$sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 5;";
+$sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 5 && s.id_survey = 5;";
 $result = $conn->query($sql);
 ?>
 

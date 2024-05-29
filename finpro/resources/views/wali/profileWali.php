@@ -18,8 +18,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         $_SESSION['id_user'] = $row['id_user'];
         $_SESSION['nama'] = $row['nama'];
-        $_SESSION['user_type'] = 'Mahasiswa'; // Contoh user type
-        header("Location: profileMahasiswa.php");
+        $_SESSION['user_type'] = 'Wali'; // Contoh user type
+        header("Location: profileWali.php");
         exit();
     } else {
         echo "Username atau password salah.";
@@ -47,32 +47,32 @@ if ($conn->connect_error) {
 
 echo $id_user;
 
-// Query untuk mendapatkan data mahasiswa berdasarkan id_user
-$sql = "SELECT * FROM r_mhs WHERE id_user = $id_user";
+// Query untuk mendapatkan data Wali Mahasiswa berdasarkan id_user
+$sql = "SELECT * FROM r_ortu WHERE id_user = $id_user";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    // Mendapatkan data mahasiswa
-    $nim = $row['mhs_nim'];
-    $nama = $row['mhs_nama'];
-    $prodi = $row['mhs_prodi'];
-    $email = $row['mhs_email'];
-    $nohp = $row['mhs_hp'];
-    $tahunmasuk = $row['mhs_tahunmasuk'];
+    // Mendapatkan data Wali Mahasiswa
+    $nim = $row['ortu_nim'];
+    $nama = $row['ortu_nama'];
+    $prodi = $row['ortu_prodi'];
+    $email = $row['ortu_email'];
+    $nohp = $row['ortu_hp'];
+    $tahunmasuk = $row['ortu_tahunmasuk'];
 } else {
-    echo "Tidak ada data mahasiswa ditemukan.";
+    echo "Tidak ada data Wali Mahasiswa ditemukan.";
     exit();
 }
 
 // Proses update data
 if (isset($_POST['email']) && isset($_POST['nohp'])) {
-    $mhs_email = $_POST['email'];
-    $mhs_nohp = $_POST['nohp'];
+    $ortu_email = $_POST['email'];
+    $ortu_nohp = $_POST['nohp'];
 
-    $sql = "UPDATE r_mhs SET mhs_email = ?, mhs_hp = ? WHERE id_user = ?";
+    $sql = "UPDATE r_ortu SET ortu_email = ?, ortu_hp = ? WHERE id_user = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $mhs_email, $mhs_nohp, $id_user);
+    $stmt->bind_param("ssi", $ortu_email, $ortu_nohp, $id_user);
     if ($stmt->execute()) {
         echo "Data berhasil diperbarui.";
     } else {
@@ -165,16 +165,16 @@ $conn->close();
         <div class="left bg-[#130B2d] py-20 relative">
             <ul class="grid grid-rows-3 gap-3 text-center text-sm items-center justify-center">
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="dashboardMahasiswa.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
+                    <a class="flex items-center gap-3" href="dashboardWali.php"><img src="../aset/dashSym.svg" class="w-10" /><span>Dashboard</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="surveyMahasiswa.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
+                    <a class="flex items-center gap-3" href="surveyWali.php"><img src="../aset/surveySym.svg" class="w-10" /><span>Survey</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2D1B6B] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="reportMahasiswa.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
+                    <a class="flex items-center gap-3" href="reportWali.php"><img src="../aset/ReportSym.svg" class="w-10" /><span>Report</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#2685F5] font-bold text-white rounded-xl">
-                    <a class="flex items-center gap-3" href="profileMahasiswa.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
+                    <a class="flex items-center gap-3" href="profileWali.php"><img src="../aset/profileSym.svg" class="w-10" /><span>Profile</span></a>
                 </li>
                 <li class="px-5 py-2 bg-[#423C57] font-bold text-white rounded-xl">
                     <a class="flex items-center gap-3" href="../logout.php"><img src="../aset/Logout.svg" class="w-10" /><span>LOG OUT</span></a>
@@ -186,7 +186,7 @@ $conn->close();
             <div class="flex">
                 <div class="card-container flex">
                     <div class="flex justify-end">
-                        <form action="profileMahasiswa.php" method="POST">
+                        <form action="profileWali.php" method="POST">
                             <div class="form">
                                 <p style="text-align: left; font-weight: bold; font-size: 15px; color: #000000; opacity: 75%; padding-left: 5px;" class="mb-2">NIM</p>
                                 <input type="text" name="nim" id="nim" class="form-control pb-2 px-2" value="<?= htmlspecialchars($nim); ?>" style="border-radius: 15px; border-width: 2px; width: 600px; height: 57px;" disabled>
