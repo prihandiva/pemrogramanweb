@@ -3,6 +3,7 @@ include "koneksi.php";
 session_start();
 if (!isset($_SESSION["nama"])) {
     header("location: ../index.php");
+    exit();
 }
 
 $servername = "localhost";
@@ -10,18 +11,15 @@ $username_db = "root";
 $password_db = "";
 $database = "projekakhir";
 
-
 $conn = new mysqli($servername, $username_db, $password_db, $database);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sqlData="SELECT id_responden_ortu, id_survey,  responden_tanggal,  responden_nama, responden_jk, responden_umur, responden_hp, responden_pendidikan, responden_pekerjaan, responden_penghasilan, mahasiswa_nim, mahasiswa_nama, mahasiswa_prodi 
-FROM t_responden_ortu 
-WHERE responden_nama <>NULL";
+$GET_['id_survey'] = 3;
+$id_survey = 3;
 
-$resultDataRegister = $conn->query($sqlData);
 
 if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['saran']) && isset($_POST['id_kategori'])) {
     $id_survey = $_POST['id_survey'];
@@ -29,17 +27,18 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
     $saran = $_POST['saran'];
     $id_kategori = $_POST['id_kategori'];
 
-    $stmt = $conn->prepare("INSERT INTO t_responden_ortu (id_responden_ortu, id_survey,  responden_tanggal,  responden_nama, responden_jk, responden_umur, responden_hp, responden_pendidikan, responden_pekerjaan, responden_penghasilan, mahasiswa_nim, mahasiswa_nama, mahasiswa_prodi, saran,id_kategori) VALUES (null, ?, NOW(),null , ?,null,null,null,2022,?,?)");
+    $resultUserData = $conn->query("SELECT * FROM r_ortu WHERE ortu_nama = '". $nama ."';");
+    $row = $resultUserData->fetch_assoc();
 
-    $stmt->bind_param("issi",  $id_survey, $nama, $saran, $id_kategori);
+    $stmt = $conn->prepare("INSERT INTO t_responden_ortu (id_responden_ortu, id_survey, responden_tanggal, responden_nama, responden_jk, responden_umur, responden_hp, responden_pendidikan, responden_pekerjaan, responden_penghasilan, mahasiswa_nim, mahasiswa_nama, mahasiswa_prodi, saran, id_kategori) VALUES (null, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $stmt->bind_param("ississssssssi", $id_survey, $nama, $row['ortu_jk'], $row['ortu_umur'], $row['ortu_hp'], $row['ortu_pendidikan'], $row['ortu_pekerjaan'], $row['ortu_penghasilan'], $row['mhs_nim'], $row['mhs_nama'], $row['mhs_prodi'], $saran, $id_kategori);
     $status_execute = $stmt->execute();
-
 
     $new_id = $stmt->insert_id;
 
-
     if ($status_execute) {
-        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori'];
+        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori']  . " AND id_survey = " . $id_survey;
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -53,10 +52,10 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
 } else {
     echo "Failed input data";
 }
-
-
 $conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,5 +128,4 @@ $conn->close();
     </div>
     </div>
 </body>
-
 </html>
