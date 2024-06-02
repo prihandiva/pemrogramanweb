@@ -74,9 +74,6 @@ class Crud
             return false;
         }
     }
-    public function tampilMaxJawaban()
-    {
-    }
     public function tampilCountJawaban($id_kategori)
     {
         $sqlAll = "SELECT jawaban, COUNT(*) as Jumlah FROM (
@@ -114,4 +111,52 @@ class Crud
         
         $result2 = $this->conn->query($sqlAll);
     }
+    public function tampilMaxJawaban($id_kategori){
+        $sqlMax = "SELECT jawaban, COUNT(*) as Jumlah FROM (
+            SELECT rm.id_responden_mhs AS id_responden, rm.id_kategori, jm.jawaban, jm.id_jawaban_mhs
+            FROM t_jawaban_mhs jm 
+            LEFT JOIN t_responden_mhs rm ON jm.id_responden_mhs = rm.id_responden_mhs
+            WHERE rm.id_kategori = $id_kategori AND jm.jawaban IS NOT NULL
+            UNION 
+            SELECT rd.id_responden_dosen, rd.id_kategori, jd.jawaban, jd.id_jawaban_dosen
+            FROM t_jawaban_dosen jd 
+            LEFT JOIN t_responden_dosen rd ON jd.id_responden_dosen = rd.id_responden_dosen
+            WHERE rd.id_kategori = $id_kategori AND jd.jawaban IS NOT NULL
+            UNION 
+            SELECT ri.id_responden_industri, ri.id_kategori, ji.jawaban, ji.id_jawaban_industri
+            FROM t_jawaban_industri ji 
+            LEFT JOIN t_responden_industri ri ON ji.id_responden_industri = ri.id_responden_industri
+            WHERE ri.id_kategori = $id_kategori AND ji.jawaban IS NOT NULL
+            UNION 
+            SELECT ro.id_responden_ortu, ro.id_kategori, jo.jawaban, jo.id_jawaban_ortu
+            FROM t_jawaban_ortu jo 
+            LEFT JOIN t_responden_ortu ro ON jo.id_responden_ortu = ro.id_responden_ortu
+            WHERE ro.id_kategori = $id_kategori AND jo.jawaban IS NOT NULL
+            UNION 
+            SELECT rt.id_responden_tendik, rt.id_kategori, jt.jawaban, jt.id_jawaban_tendik
+            FROM t_jawaban_tendik jt 
+            LEFT JOIN t_responden_tendik rt ON jt.id_responden_tendik = rt.id_responden_tendik
+            WHERE rt.id_kategori = $id_kategori AND jt.jawaban IS NOT NULL
+            UNION 
+            SELECT ra.id_responden_alumni, ra.id_kategori, ja.jawaban, ja.id_jawaban_alumni
+            FROM t_jawaban_alumni ja 
+            LEFT JOIN t_responden_alumni ra ON ja.id_responden_alumni = ra.id_responden_alumni
+            WHERE ra.id_kategori = $id_kategori AND ja.jawaban IS NOT NULL
+        ) AS all_responden
+        GROUP BY jawaban ORDER BY Jumlah DESC LIMIT 1";
+        $resultMax = $this->conn->query($sqlMax);
+        $maxJawaban = $resultMax->fetch_assoc()['jawaban'];
+        return $maxJawaban;
+    }
+        // Menampilkan kategori
+        public function tampilKategori()
+        {
+            $sql = "SELECT id_kategori, kategori_nama FROM m_kategori";
+            $result = $this->conn->query($sql);
+            $kategoriList = [];
+            while ($row = $result->fetch_assoc()) {
+                $kategoriList[] = $row;
+            }
+            return $kategoriList;
+        }
 }

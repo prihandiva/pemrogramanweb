@@ -131,7 +131,7 @@ if ($conn->connect_error) {
                 </div>
                 <div>
                     <a href=>
-                        <img src="../aset/mitra.svg" class="w-56">
+                        <img src="../aset/mitra.svg" class="w-42">
                         <h1 class="text-center text-2xl"><b>MITRA</b></h1>
                         <?php
                         $crud = new Crud();

@@ -1,9 +1,11 @@
-<?php
-include "Crud.php";
+<?php 
 session_start();
+include "Crud.php";
+
 if (!isset($_SESSION["nama"])) {
     header("location: ../index.php");
 }
+
 $servername = "localhost";
 $username_db = "root";
 $password_db = "";
@@ -14,8 +16,97 @@ $conn = new mysqli($servername, $username_db, $password_db, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$crud = new Crud();
-$kategoriList = $crud->tampilKategori(); // Mendapatkan daftar kategori
+
+// Define weights
+$criteria_weights = [
+    'Fasilitas' => 0.15,
+    'Dosen' => 0.25,
+    'Sistem' => 0.10,
+    'Kurikulum' => 0.30,
+    'Mahasiswa' => 0.20,
+];
+
+// Fetch categories
+$sql = "SELECT kategori_nama FROM m_kategori";
+$result = $conn->query($sql);
+
+$categories = [];
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $categories[] = strtolower($row['kategori_nama']);
+    }
+} else {
+    echo "0 results";
+    exit;
+}
+
+// Map string values to numeric
+function mapValue($value) {
+    switch (strtolower($value)) {
+        case 'sangat baik':
+            return 4;
+        case 'baik':
+            return 3;
+        case 'cukup':
+            return 2;
+        case 'kurang':
+            return 1;
+        default:
+            return 0;
+    }
+}
+
+// Fetch answers from all tables and union them
+$tables = [
+    't_jawaban_mhs', 't_jawaban_dosen', 't_jawaban_tendik', 
+    't_jawaban_ortu', 't_jawaban_industri', 't_jawaban_alumni'
+];
+
+$answers = [];
+foreach ($tables as $table) {
+    $sql = "SELECT jawaban FROM $table";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $row['fasilitas'] = mapValue($row['fasilitas']);
+            $row['dosen'] = mapValue($row['dosen']);
+            $row['sistem'] = mapValue($row['sistem']);
+            $row['kurikulum'] = mapValue($row['kurikulum']);
+            $row['mahasiswa'] = mapValue($row['mahasiswa']);
+            $answers[] = $row;
+        }
+    }
+}
+
+// Normalize the scores
+$normalized_matrix = [];
+foreach ($answers as $answer) {
+    $normalized_answer = [];
+    foreach ($categories as $category) {
+        $max_value = max(array_column($answers, $category));
+        $normalized_answer[$category] = $answer[$category] / $max_value;
+    }
+    $normalized_matrix[$answer['id']] = $normalized_answer;
+}
+
+// Calculate the weighted sum for each answer
+$weighted_sum = [];
+foreach ($normalized_matrix as $id => $values) {
+    $weighted_sum[$id] = 0;
+    foreach ($values as $category => $normalized_value) {
+        $weighted_sum[$id] += $normalized_value * $criteria_weights[ucfirst($category)];
+    }
+}
+
+// Display the results
+echo "<table border='1'>";
+echo "<tr><th>ID</th><th>Score</th></tr>";
+foreach ($weighted_sum as $id => $score) {
+    echo "<tr><td>$id</td><td>$score</td></tr>";
+}
+echo "</table>";
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +114,7 @@ $kategoriList = $crud->tampilKategori(); // Mendapatkan daftar kategori
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Laporan Survey</title>
+    <title>SBP</title>
     <link rel="stylesheet" href="mahasiswa-beranda.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
     <style>
@@ -70,43 +161,8 @@ $kategoriList = $crud->tampilKategori(); // Mendapatkan daftar kategori
         </div>
         <!--DIV KANAN-->
         <div class="col-span-4">
-            <h1 class="text-4xl font-bold mb-6 mt-8 px-6">Laporan Survey</h1>
-            <div class="w-[900px] mx-auto bg-white p-10 rounded-lg shadow-md mt-4">
-                <!--Tabel-->
-                <div>
-                    <table class="border-collapse table-auto w-full text-sm mb-2">
-                        <thead>
-                            <tr class="mt-4 mb-4">
-                                <th class="text-center text-lg">Jenis Penilaian</th>
-                                <th class="text-center text-lg">Hasil Keseluruhan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($kategoriList as $kategori): ?>
-                                <?php 
-                                    $id_kategori = $kategori['id_kategori'];
-                                    $maxJawaban = $crud->tampilMaxJawaban($id_kategori);
-                                ?>
-                                <tr>
-                                    <td class="py-2 px-4 border-b text-base">Hasil Keseluruhan <?= htmlspecialchars($kategori['kategori_nama']) ?></td>
-                                    <td class="py-2 px-4 border-b bg-violet-950 rounded-[15px] text-center text-white px-4 py-3 text-base font-bold"><?= htmlspecialchars($maxJawaban) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-
-                    </table>
-                </div>
-                
-                
-                <div class="justify center mt-10">
-                    <button class="bg-violet-950 rounded-[15px] text-center text-white px-4 py-3 text-lg font-bold capitalize leading-normal">
-                        <a href="lihatSaran.php"><b>Tampilkan Saran Dan Kritik User</b></a>
-                    </button>
-                    <!--<button class="bg-violet-950 rounded-[15px] text-center text-white px-4 py-3 text-lg font-bold capitalize leading-normal">
-                        <a href="hitungBobot.php"><b>Bobot</b></a>
-                    </button>-->
-                </div>
-            </div>
+            <h1 class="text-4xl font-bold mb-6 mt-8 px-6">Perhitungan Menggunakan Metode SAW (Simple Additive Weighting)</h1>
+            
         </div>
     </div>
 </body>

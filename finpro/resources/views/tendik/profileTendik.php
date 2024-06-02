@@ -188,7 +188,7 @@ $conn->close();
                     <div class="circle" style="margin-top: 20px; margin-left: 100px;">
                         <img src="../aset/lambang-polinema1.png" alt="Placeholder Image" width="250" height="285">
                         <div class="photo-caption">
-                            <button class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Tendik</button>
+                            <button class="btn btn-primary fw-bold tombol bg-[#2D1B6B] text-white px-5 py-2" style="border-radius: 10px; width: 100%;">Tenaga Pendidikan</button>
                         </div>
                     </div>
                 </div>

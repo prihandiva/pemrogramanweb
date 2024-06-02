@@ -80,7 +80,7 @@ header("location: ../index.php");
                     </a>
                 </div>
                 <div>
-                    <a href="LaporanSurvey.php"> <img src="../aset/Laporan_survey.svg" class="w-56">
+                    <a href="LaporanSurvey.php"> <img src="../aset/Laporan_survey.svg" class="w-40">
                         <h1 class="text-center text-2xl"><b>LAPORAN SURVEY</b></h1>
                     </a>
                 </div>

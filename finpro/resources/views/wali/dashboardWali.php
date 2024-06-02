@@ -87,13 +87,13 @@ if ($conn->connect_error) {
             </div>
             <!--KONTEN-->
             <div class="flex items-center justify-center gap-36">
-                <div>
+                <div class="w-40 mb-10">
                     <a href="surveyWali.php"> <img src="../aset/surveyBigSym.svg" class="w-40 mb-10">
                         <h1 class="text-center text-4xl"><b>Survey Kepuasan</b></h1>
                         <p>Berikan penilaian dan bantu kami tingkatkan layanan dengan mengisi Survey Kepuasan!</p>
                     </a>
                 </div>
-                <div>
+                <div class="w-56">
                     <a href="profileWali.php">
                         <img src="../aset/profileBigSym.svg" class="w-56">
                         <h1 class="text-center text-4xl"><b>Profil</b></h1>

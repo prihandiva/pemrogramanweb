@@ -117,7 +117,7 @@ $result2 = $conn->query($sqlAll);
                         while ($row = $result2->fetch_assoc()) {
                     ?>
                             <tr>
-                                <td class=""><?= $row['saran']; ?> ||</td>
+                                <td><hr><?= $row['saran']; ?> <br><hr></td>
                             </tr>
                     <?php
                         }
