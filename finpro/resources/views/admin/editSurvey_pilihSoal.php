@@ -118,6 +118,9 @@ $resultKategori = $conn->query($sqlKategori);
                                         <a href="editSoal.php?id_soal=<?=$row['id_soal']?>" class="">
                                                 <button class="ml-4 bg-[#2D1B6B] hover:bg-blue-700 text-white font-bold py-2 px-4 h-full " type="button">Edit</button>
                                         </a>
+                                        <a href="hapusSoal.php?id_soal=<?=$row['id_soal']?>" class="">
+                                                <button class="ml-4 bg-[#2D1B6B] hover:bg-blue-700 text-white font-bold py-2 px-4 h-full " type="button">Hapus</button>
+                                        </a>
                                     </div>
                             <?php
                                 }
@@ -132,6 +135,7 @@ $resultKategori = $conn->query($sqlKategori);
                                 </div>
                                 <div>
                                     <a class="bg-white text-[#2D1B6B] border-[#2D1B6B] py-2 px-4 rounded-xl border-[#2D1B6B] border-4" href="tambahSoal.php?id_kategori=<?=$id_kategori?>"><b>Tambah</b></a>
+        
                                     <button class="end-content bg-[#2D1B6B] border-[#2D1B6B] text-white py-2 px-4 rounded-xl border-4" type="submit"><a href="editSurvey.php"><b>Simpan</b></a></button>
                                 </div>
                             </div>

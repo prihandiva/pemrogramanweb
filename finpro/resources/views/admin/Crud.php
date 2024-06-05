@@ -30,6 +30,52 @@ class Crud
         $stmt->bind_param("si", $question, $id_soal);
         return $stmt->execute();
     }
+        // Hapus soal
+        public function hapusSoal($question, $id_soal, $id_survey)
+        {
+            $relatedTables = [
+                1 => 't_jawaban_mhs',
+                2 => 't_jawaban_dosen',
+                3 => 't_jawaban_ortu',
+                4 => 't_jawaban_tendik',
+                5 => 't_jawaban_industri',
+                6 => 't_jawaban_alumni'
+            ];
+    
+            // Pastikan tabel terkait valid
+            if (!array_key_exists($id_survey, $relatedTables)) {
+                return false; // Id survey tidak valid
+            }
+    
+            $relatedTable = $relatedTables[$id_survey];
+    
+            // Mulai transaksi
+            $this->conn->begin_transaction();
+    
+            try {
+                // Hapus data terkait di tabel terkait
+                $sqlDeleteRelated = "DELETE FROM $relatedTable WHERE id_soal = ?";
+                $stmtDeleteRelated = $this->conn->prepare($sqlDeleteRelated);
+                $stmtDeleteRelated->bind_param("i", $id_soal);
+                $stmtDeleteRelated->execute();
+    
+                // Hapus data di tabel m_survey_soal
+                $sql = "DELETE FROM m_survey_soal WHERE id_soal = ?";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bind_param("i", $id_soal);
+                $stmt->execute();
+    
+                // Commit transaksi
+                $this->conn->commit();
+                return true;
+            } catch (Exception $e) {
+                // Rollback transaksi jika ada kesalahan
+                $this->conn->rollback();
+                return false;
+            }
+        }
+            
+        
 
     // Method lainnya
     public function tampilJumlah($id_survey)

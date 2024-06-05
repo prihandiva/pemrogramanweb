@@ -83,7 +83,7 @@ if ($conn->connect_error) {
                     <div class="mb-4">
                         <label for="question" class="block text-gray-700 text-lg font-bold mb-2">Pertanyaan</label>
                         <input type="text" id="question" name="question" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="">
-                        <form action="" method="post" id="form">
+                        
                             <select name="user_type" class="w-full border px-4 rounded-lg text-sm h-10 mt-10">
                                 <option value="">Tujuan Responden</option>
                                 <option value="1">Mahasiswa</option>
@@ -93,7 +93,7 @@ if ($conn->connect_error) {
                                 <option value="5">Mitra</option>
                                 <option value="6">Alumni</option>
                             </select>
-                            </form>
+                            
                         <?php
                         // Periksa apakah form telah dikirim
                         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id_kategori'])) {
@@ -101,7 +101,6 @@ if ($conn->connect_error) {
                             $question = $_POST['question'];
                             $id_kategori = $_GET['id_kategori'];
                             $id_survey = $_POST['user_type'];
-
 
                             //OOP
                             $crud = new Crud();
@@ -132,9 +131,8 @@ if ($conn->connect_error) {
                     </div>
 
                     <div type="submit" class="w-[130px] h-[53px] relative">
-                        <button type="submit" class="end-content bg-[#2D1B6B] border-[#2D1B6B] text-white py-2 px-4 rounded-xl border-4"><a href="#"><b>Simpan</b></a></button>
-                    </div>
-                    
+                        <button type="submit" class="end-content bg-[#2D1B6B] border-[#2D1B6B] text-white py-2 px-4 rounded-xl border-4"><b>Simpan</b></button>
+                    </div> 
                 </form>
             </div>
         </div>

@@ -24,16 +24,13 @@ $row = $resultSoal->fetch_assoc();
 $soal_nama = $row['soal_nama'];
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Soal</title>
+    <title>Hapus Soal</title>
     <link rel="stylesheet" href="mahasiswa-beranda.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
     <style>
@@ -81,7 +78,7 @@ $soal_nama = $row['soal_nama'];
         <!--DIV KANAN-->
         <div class="col-span-4">
         <div>
-            <h1 class="font-bold text-3xl ps-10 mt-6">Edit Pertanyaan</h1>
+            <h1 class="font-bold text-3xl ps-10 mt-6">Hapus Pertanyaan</h1>
         </div>
         <div class="w-[900px] mx-auto bg-white p-6 rounded-lg shadow-md">
         <form action="" method="POST" class="flex flex-col">
@@ -89,23 +86,7 @@ $soal_nama = $row['soal_nama'];
             <label for="question" class="block text-gray-700 text-lg font-bold mb-2">Pertanyaan</label>
             <input type="text" id="question" name="question"
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                   value="<?= $soal_nama ?>"> 
-                   <?php
-                        // Periksa apakah form telah dikirim
-                        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id_soal'])) {
-                            // Ambil nilai dari input teks
-                            $question = $_POST['question'];
-                            $id_soal = $_GET['id_soal'];
-                            
-                            $crud = new Crud();
-
-                            if ($crud->editSoal($question, $id_soal)) {
-                                echo "Data berhasil dirubah ke tabel soal.";
-                            } else {
-                                echo "Error: Data tidak berhasil dirubah.";
-                            }
-                        }
-                        ?>
+                   value="<?= $soal_nama ?>" readonly>
         </div>
         <div class="">
             <span class="block text-gray-700 text-lg font-bold mb-2">Keterangan</span>
@@ -121,21 +102,37 @@ $soal_nama = $row['soal_nama'];
             </label>
             <label class="inline-flex items-center mt-3 mr-4">
                 <input type="radio" name='rating' value='baik'
-                       class='form-radio h-5 w-5 text-gray-600'disabled><span
+                       class='form-radio h-5 w-5 text-gray-600' disabled><span
                         class='ml-2 text-gray'>Baik</span>
             </label>
             <label class="inline-flex items-center mt-3">
                 <input type="radio" name='rating' value='sangat_baik'
-                       class='form-radio h-5 w-5 text-gray-600'disabled><span
-                        class= 'ml-2 text-gray'>Sangat Baik</span>
+                       class='form-radio h-5 w-5 text-gray-600' disabled><span
+                        class='ml-2 text-gray'>Sangat Baik</span>
             </label>
         </div>
-        <button class="self-end" type="submit">
-            <div class="bg-violet-950 rounded-[15px] text-center text-white px-4  py-3 text-lg font-bold capitalize leading-normal"><a href="#">Simpan</a></div>
+        <button class=" self-end" type="submit">
+            <div class="bg-violet-950 rounded-[15px] text-center text-white px-4  py-3 text-lg font-bold capitalize leading-normal" >Hapus</div>
         </button>
     </form>
+
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id_soal'])) {
+            // Ambil nilai dari input teks
+            $question = $_POST['question'];
+            $id_soal = $_GET['id_soal'];
+            $id_survey = $_POST['id_survey'];
+
+            $crud = new Crud();
+
+            if ($crud->hapusSoal($question, $id_soal, $id_survey)) {
+                echo "Data berhasil dihapus dari tabel soal.";
+            } else {
+                echo "Error: Data tidak berhasil dihapus.";
+            }
+        }
+    ?>
     </div>
-   
     </div>
     </div>
     </div>
