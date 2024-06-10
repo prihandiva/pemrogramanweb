@@ -1,4 +1,5 @@
 <?php 
+
 session_start();
 include "Crud.php";
 
@@ -6,12 +7,7 @@ if (!isset($_SESSION["nama"])) {
     header("location: ../index.php");
 }
 
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -28,7 +24,7 @@ $criteria_weights = [
 
 // Fetch categories
 $sql = "SELECT kategori_nama FROM m_kategori";
-$result = $conn->query($sql);
+$result = $connect->query($sql);
 
 $categories = [];
 if ($result->num_rows > 0) {
@@ -65,7 +61,7 @@ $tables = [
 $answers = [];
 foreach ($tables as $table) {
     $sql = "SELECT jawaban FROM $table";
-    $result = $conn->query($sql);
+    $result = $connect->query($sql);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $row['fasilitas'] = mapValue($row['fasilitas']);
@@ -106,7 +102,7 @@ foreach ($weighted_sum as $id => $score) {
 }
 echo "</table>";
 
-$conn->close();
+$connect->close();
 ?>
 
 <!DOCTYPE html>

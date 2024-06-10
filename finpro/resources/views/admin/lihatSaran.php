@@ -1,22 +1,14 @@
 <?php
 include "Crud.php";
+include '../koneksi.php';
+
 session_start();
 
 if (!isset($_SESSION["nama"]))
 {
 header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 ///HARUS SEMUA RESPONDEN DITAMPILKAN
 $sqlAll = "SELECT rm.responden_nama, u.posisi 
@@ -43,9 +35,9 @@ SELECT ra.responden_nama, u.posisi
 FROM t_responden_alumni ra 
 LEFT JOIN m_user u ON u.nama = ra.responden_nama";
 
-$result2 = $conn->query($sqlAll);
+$result2 = $connect->query($sqlAll);
 
-$resultPosisi = $conn->query($sqlAll);
+$resultPosisi = $connect->query($sqlAll);
 
 // Mengambil nilai dari hasil query
 $row = $resultPosisi->fetch_assoc();

@@ -1,21 +1,12 @@
 <?php
 include "Crud.php";
+include "../koneksi.php";
 session_start();
 if (!isset($_SESSION["nama"]))
 {
 header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 ///HARUS SEMUA RESPONDEN DITAMPILKAN
 $sqlAll = "SELECT * FROM (
@@ -50,7 +41,7 @@ $sqlAll = "SELECT * FROM (
     WHERE ra.responden_nama = '" . $_GET['responden_nama'] . "') 
     AS all_responden";
 
-$result2 = $conn->query($sqlAll);
+$result2 = $connect->query($sqlAll);
 ?>
 
 <!DOCTYPE html>

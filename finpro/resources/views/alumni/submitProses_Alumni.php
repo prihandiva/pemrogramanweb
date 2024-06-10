@@ -5,17 +5,9 @@ if (!isset($_SESSION["nama"])) {
     header("location: ../index.php");
 }
 
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
+include 'koneksi.php'; // Include the connectection file
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 $nama = $_SESSION['nama'];
 $GET_['id_survey'] = 6;
 $id_survey = 6;
@@ -27,11 +19,11 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
     $id_kategori = $_POST['id_kategori'];
 
 
-    $resultUserData = $conn->query("SELECT * FROM r_alumni WHERE alumni_nama = '". $nama ."';");
+    $resultUserData = $connect->query("SELECT * FROM r_alumni WHERE alumni_nama = '". $nama ."';");
     $row = $resultUserData->fetch_assoc();
     
 
-    $stmt = $conn->prepare("INSERT INTO t_responden_alumni (id_responden_alumni, id_survey,  responden_tanggal , responden_nim, responden_nama ,responden_prodi,responden_email,responden_hp,tahun_lulus, saran,id_kategori) VALUES (null,?,NOW(),?,?,?,?,?,?,?,?)");
+    $stmt = $connect->prepare("INSERT INTO t_responden_alumni (id_responden_alumni, id_survey,  responden_tanggal , responden_nim, responden_nama ,responden_prodi,responden_email,responden_hp,tahun_lulus, saran,id_kategori) VALUES (null,?,NOW(),?,?,?,?,?,?,?,?)");
 
     $stmt->bind_param("isssssssi",  $id_survey, $row['alumni_nim'], $nama,$row['alumni_prodi'],$row['alumni_email'],$row['alumni_hp'],$row['alumni_tahunlulus'], $saran, $id_kategori);
     $status_execute = $stmt->execute();
@@ -40,10 +32,10 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
 
     if ($status_execute) {
         $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori']  . " AND id_survey = " . $id_survey;
-        $result = $conn->query($sql);
+        $result = mysqli_query($connect,$sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $stmt = $conn->prepare("INSERT INTO t_jawaban_alumni (id_jawaban_alumni, id_responden_alumni, id_soal, jawaban) VALUES (null, ?, ?, ?)");
+                $stmt = $connect->prepare("INSERT INTO t_jawaban_alumni (id_jawaban_alumni, id_responden_alumni, id_soal, jawaban) VALUES (null, ?, ?, ?)");
                 // Bind the parameters
                 $stmt->bind_param("iis", $new_id, $row['id_soal'], $_POST[$row['id_soal']]);
                 $status_execute = $stmt->execute();
@@ -55,7 +47,7 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
 }
 
 
-$conn->close();
+$connect->close();
 ?>
 
 <!DOCTYPE html>

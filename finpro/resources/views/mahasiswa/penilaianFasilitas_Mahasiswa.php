@@ -4,16 +4,8 @@ if (!isset($_SESSION["nama"]))
 {
 header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
+include 'koneksi.php'; // Include the connection file
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
 /// Set id_kategori ke dalam session
 $_SESSION['id_kategori'] = 1;
 $_SESSION['id_survey'] = 1;
@@ -21,14 +13,14 @@ $_SESSION['id_survey'] = 1;
 // Check apakah session 'nama' sudah diset
 if (isset($_SESSION['nama'])) {
     $sql = "SELECT * FROM t_responden_mhs WHERE id_kategori = 1 AND responden_nama = '" . $_SESSION['nama'] . "'" ;
-    $result = $conn->query($sql);
+    $result = mysqli_query($connect, $sql);
     if ($result->num_rows > 0) {
         header("Location: sudahIsi_Mahasiswa.php");
         die();
     }
 }
 $sql = "SELECT s.id_soal, s.id_survey id_survey, k.kategori_nama, k.id_kategori id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = 1 && s.id_survey = 1;";
-$result = $conn->query($sql);
+$result = mysqli_query($connect, $sql);
 ?>
 
 
@@ -134,7 +126,7 @@ $result = $conn->query($sql);
                   } else {
                     echo "0 results";
                   }
-                  $conn->close();
+                  $connect->close();
                 ?>
             <div class="mt-8">
                 <h2 class="text-xl font-bold mb-2">Kolom Kritik dan Saran</h2>

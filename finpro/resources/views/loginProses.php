@@ -32,7 +32,7 @@ $user_status = mysqli_real_escape_string($conn, $user_status);
 
 // Mencari pengguna dengan username tertentu di database
 $sql = "SELECT * FROM m_user WHERE username = '$username' AND posisi = '$user_status'";
-$result = $conn->query($sql);
+$result = $connect->query($sql);
 
 // Periksa apakah username dan password cocok
 if ($result->num_rows > 0) {
@@ -119,4 +119,4 @@ if ($result->num_rows > 0) {
     echo "user_not_found";
 }
 
-$conn->close();
+$connect->close();

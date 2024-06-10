@@ -3,16 +3,8 @@ session_start();
 if (!isset($_SESSION["nama"])) {
     header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'koneksi.php'; // Include the connection file
 
 ?>
 <!DOCTYPE html>

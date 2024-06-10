@@ -1,5 +1,6 @@
 <?php
 require_once 'Crud.php';
+include "../koneksi.php";
 
 session_start();
 if (!isset($_SESSION["nama"]))

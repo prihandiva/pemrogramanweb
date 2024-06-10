@@ -8,11 +8,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
     echo "test";
     // Melindungi dari SQL Injection
-    $username = mysqli_real_escape_string($conn, $username);
-    $password = mysqli_real_escape_string($conn, $password);
+    $username = mysqli_real_escape_string($connect, $username);
+    $password = mysqli_real_escape_string($connect, $password);
 
     $sql = "SELECT id_user, nama FROM m_user WHERE username='$username' AND password='$password'";
-    $result = $conn->query($sql);
+    $result = $connect->query($sql);
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
@@ -35,21 +35,11 @@ if (!isset($_SESSION['id_user'])) {
 $id_user = $_SESSION['id_user']; // Ambil id_user dari sesi
 
 // Buat koneksi
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
-
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
-
+include 'koneksi.php'; // Include the connection file
 
 // Query untuk mendapatkan data mahasiswa berdasarkan id_user
 $sql = "SELECT * FROM r_mhs WHERE id_user = $id_user";
-$result = $conn->query($sql);
+$result = mysqli_query($connect, $sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -71,7 +61,7 @@ if (isset($_POST['email']) && isset($_POST['nohp'])) {
     $mhs_nohp = $_POST['nohp'];
 
     $sql = "UPDATE r_mhs SET mhs_email = ?, mhs_hp = ? WHERE id_user = ?";
-    $stmt = $conn->prepare($sql);
+    $stmt = $connect->prepare($sql);
     $stmt->bind_param("ssi", $mhs_email, $mhs_nohp, $id_user);
     if ($stmt->execute()) {
         echo "Data berhasil diperbarui.";
@@ -81,7 +71,7 @@ if (isset($_POST['email']) && isset($_POST['nohp'])) {
     $stmt->close();
 }
 
-$conn->close();
+$connect->close();
 ?>
 
 <!DOCTYPE html>

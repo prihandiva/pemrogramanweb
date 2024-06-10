@@ -1,26 +1,18 @@
 <?php
-include "Crud.php";
+include "../koneksi.php";
 
 session_start();
 if (!isset($_SESSION["nama"]))
 {
 header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+
 
 $id_kategori = $_GET['id_kategori'];
 
 $sqlKategori = "SELECT kategori_nama From m_kategori WHERE id_kategori = '$id_kategori'";
-$resultKategori = $conn->query($sqlKategori);
+$resultKategori = mysqli_query($connect,$sqlKategori);
 
 ?>
 
@@ -85,7 +77,7 @@ $resultKategori = $conn->query($sqlKategori);
                             <?php
 
                                 $sql = "SELECT s.id_soal, s.id_survey, k.kategori_nama, k.id_kategori, soal_nama FROM m_survey_soal s LEFT JOIN m_kategori k ON s.id_kategori = k.id_kategori WHERE s.id_kategori = $id_kategori;";
-                                $result = $conn->query($sql);
+                                $result = mysqli_query($connect,$sql);
 
 
                             if ($result->num_rows > 0) {
@@ -127,7 +119,7 @@ $resultKategori = $conn->query($sqlKategori);
                             } else {
                                 echo "0 results";
                             }
-                            $conn->close();
+                            $connect->close();
                             ?>
                             <div class="flex justify-between w-full md-40">
                                 <div>

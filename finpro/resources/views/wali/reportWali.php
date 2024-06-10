@@ -1,29 +1,18 @@
 <?php
-include "koneksi.php";
+include "koneksi.php"; // Mengimpor file koneksi.php
 session_start();
-if (!isset($_SESSION["nama"]))
-{
-header("location: ../index.php");
-}
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!isset($_SESSION["nama"])) {
+    header("location: ../index.php");
+    exit();
 }
 
+// Gunakan koneksi dari koneksi.php
+$conn = $connect;
 
-$sql = "SELECT * FROM t_responden_ortu r INNER JOIN m_kategori k ON r.id_kategori = k.id_kategori WHERE responden_nama = '" . $_SESSION['nama']."';";
-$result = $conn->query($sql);
-
+$sql = "SELECT * FROM t_responden_ortu r INNER JOIN m_kategori k ON r.id_kategori = k.id_kategori WHERE responden_nama = '" . $connect->real_escape_string($_SESSION['nama']) . "';";
+$result = $connect->query($sql);
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +45,7 @@ $result = $conn->query($sql);
             </div>
         </div>
         <div class="text-sm text-end mt-10">
-        <h1><b><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></b></h1>
+            <h1><b><?= htmlspecialchars($_SESSION['nama']) ?> | <?= htmlspecialchars($_SESSION['user_type']) ?></b></h1>
         </div>
     </div>
     <hr class="border-2 border-black" />
@@ -85,36 +74,35 @@ $result = $conn->query($sql);
         <div class="col-span-4">
             <h1 class="text-4xl font-bold mb-6 mt-8 px-6">Report Survey</h1>
             <div class="w-[900px] mx-auto bg-white p-10 rounded-lg shadow-md  mt-4">
-        <div>
-            <table class="border-collapse table-auto w-full text-sm mb-2">
-                <thead>
-                    <tr>
-                        <th class="text-left">Jenis Penilaian</th>
-                        <th class="text-left">Status</th>
-                        <th class="text-left">Waktu Pengisian</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <?php
-                    //AMBIL HASIL SURVEY DARI DATABASE
-                    if ($result->num_rows > 0) {
-                        // output data of each row
-                        while ($row = $result->fetch_assoc()) {
-                            ?>    
-                    <tr>
-                        <td class=""><?= $row['kategori_nama']; ?></td>
-                        <td class=""><?= ($row['responden_nama']) ? "Telah Diisi" : "Belum Terisi"; ?></td>
-                        <td class=""><?= $row['responden_tanggal']; ?></td>
-                    </tr>
-                    <?php
-                        }
-                    }
-                    ?>
-                    </tbody>
-            </table>
-        </div>
+                <div>
+                    <table class="border-collapse table-auto w-full text-sm mb-2">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Jenis Penilaian</th>
+                                <th class="text-left">Status</th>
+                                <th class="text-left">Waktu Pengisian</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            //AMBIL HASIL SURVEY DARI DATABASE
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>    
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['kategori_nama']); ?></td>
+                                        <td><?= ($row['responden_nama']) ? "Telah Diisi" : "Belum Terisi"; ?></td>
+                                        <td><?= htmlspecialchars($row['responden_tanggal']); ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
     </div>
 </body>
 

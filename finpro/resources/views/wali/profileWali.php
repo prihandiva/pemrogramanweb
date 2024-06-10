@@ -8,11 +8,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Melindungi dari SQL Injection
-    $username = mysqli_real_escape_string($conn, $username);
-    $password = mysqli_real_escape_string($conn, $password);
+    $username = mysqli_real_escape_string($connect, $username);
+    $password = mysqli_real_escape_string($connect, $password);
 
     $sql = "SELECT id_user, nama FROM m_user WHERE username='$username' AND password='$password'";
-    $result = $conn->query($sql);
+    $result = $connect->query($sql);
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
@@ -34,20 +34,9 @@ if (!isset($_SESSION['id_user'])) {
 
 $id_user = $_SESSION['id_user']; // Ambil id_user dari sesi
 
-// Buat koneksi
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
-
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
 // Query untuk mendapatkan data Wali Mahasiswa berdasarkan id_user
 $sql = "SELECT * FROM r_ortu WHERE id_user = $id_user";
-$result = $conn->query($sql);
+$result = $connect->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -73,16 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ortu_hp = $_POST['ortu_hp'];
 
         // Melindungi dari SQL Injection
-        $ortu_hp = mysqli_real_escape_string($conn, $ortu_hp);
+        $ortu_hp = mysqli_real_escape_string($connect, $ortu_hp);
 
         $sql = "UPDATE r_ortu SET ortu_hp = ? WHERE id_user = ?";
-        $stmt = $conn->prepare($sql);
+        $stmt = $connect->prepare($sql);
         $stmt->bind_param("si", $ortu_hp, $id_user);
         $stmt->close();
     }
 }
 
-$conn->close();
+$connect->close();
 ?>
 
 <!DOCTYPE html>

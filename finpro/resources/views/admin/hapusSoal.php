@@ -1,23 +1,19 @@
 <?php
 require_once 'Crud.php';
+include '../koneksi.php';
 session_start();
 if (!isset($_SESSION["nama"]))
 {
 header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($connect->connect_error) {
+    die("Connection failed: " . $connect->connect_error);
 }
 $id_soal = $_GET['id_soal'];
 $sqlSoal = "SELECT soal_nama From m_survey_soal WHERE id_soal = '$id_soal'";
-$resultSoal = $conn->query($sqlSoal);
+$resultSoal = $connect->query($sqlSoal);
 
 // Mengambil nilai dari hasil query
 $row = $resultSoal->fetch_assoc();
@@ -114,24 +110,24 @@ $soal_nama = $row['soal_nama'];
         <button class=" self-end" type="submit">
             <div class="bg-violet-950 rounded-[15px] text-center text-white px-4  py-3 text-lg font-bold capitalize leading-normal" >Hapus</div>
         </button>
-    </form>
+    
 
     <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id_soal'])) {
             // Ambil nilai dari input teks
             $question = $_POST['question'];
             $id_soal = $_GET['id_soal'];
-            $id_survey = $_POST['id_survey'];
-
+            
             $crud = new Crud();
 
-            if ($crud->hapusSoal($question, $id_soal, $id_survey)) {
+            if ($crud->hapusSoal($question, $id_soal)) {
                 echo "Data berhasil dihapus dari tabel soal.";
             } else {
                 echo "Error: Data tidak berhasil dihapus.";
             }
         }
     ?>
+    </form>
     </div>
     </div>
     </div>

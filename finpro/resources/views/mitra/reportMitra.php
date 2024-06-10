@@ -5,21 +5,15 @@ if (!isset($_SESSION["nama"]))
 {
 header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($connect->connect_error) {
+    die("Connection failed: " . $connect->connect_error);
 }
 
 
 $sql = "SELECT * FROM t_responden_industri r INNER JOIN m_kategori k ON r.id_kategori = k.id_kategori WHERE responden_nama = '" . $_SESSION['nama'] . "';";
-$result = $conn->query($sql);
+$result = mysqli_query($connect,$sql);
 
 ?>
 

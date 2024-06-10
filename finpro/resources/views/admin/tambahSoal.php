@@ -7,16 +7,6 @@ if (!isset($_SESSION["nama"])) {
     header("location: ../index.php");
 }
 
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
-
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 
 ?>
@@ -134,6 +124,7 @@ if ($conn->connect_error) {
                         <button type="submit" class="end-content bg-[#2D1B6B] border-[#2D1B6B] text-white py-2 px-4 rounded-xl border-4"><b>Simpan</b></button>
                     </div> 
                 </form>
+
             </div>
         </div>
     </div>

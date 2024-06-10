@@ -1,16 +1,8 @@
 <?php
+include "koneksi.php";
 session_start();
-include "koneksi.php"; // Mengimpor file koneksi.php
-
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
-
-// Buat koneksi
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+if ($connect->connect_error) {
+    die("Koneksi gagal: " . $connect->connect_error);
 }
 
 if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password']) && isset($_POST['user_type'])) {
@@ -21,25 +13,27 @@ if (isset($_POST['username']) && isset($_POST['nama']) && isset($_POST['password
     $user_type = $_POST['user_type'];
 
     // Melindungi dari SQL Injection
-    $username = mysqli_real_escape_string($conn, $username);
-    $nama = mysqli_real_escape_string($conn, $nama);
-    $password = mysqli_real_escape_string($conn, $password);
-    $user_type = mysqli_real_escape_string($conn, $user_type);
+    $username = mysqli_real_escape_string($connect, $username);
+    $nama = mysqli_real_escape_string($connect, $nama);
+    $password = mysqli_real_escape_string($connect, $password);
+    $user_type = mysqli_real_escape_string($connect, $user_type);
 
     // Query untuk memasukkan data ke dalam tabel
     $sql = "INSERT INTO m_user (username, nama, password, posisi) VALUES ('$username', '$nama', '$password', '$user_type')";
-    $resultUser = $conn->query($sql);
+
+    $resultUser = $connect->query($sql);
+    
 
     $id_user = '';
     if ($resultUser === TRUE) {
         // Mendapatkan ID user yang baru saja dimasukkan
-        $id_user = $conn->insert_id;
+        $id_user = $connect->insert_id;
 
         echo "User ID: " . $id_user . "<br>"; // Debugging
 
        
     } else {
-        echo "Error inserting into m_user: " . $sql . "<br>" . $conn->error;
+        echo "Error inserting into m_user: " . $sql . "<br>" . $connect->error;
     }
 }
 
@@ -53,27 +47,27 @@ if (isset($_POST['jabatan']) && isset($_POST['perusahaan']) && isset($_POST['ema
     $responden_kota = $_POST['kota'];
 
     // Melindungi dari SQL Injection
-    $responden_jabatan = mysqli_real_escape_string($conn, $responden_jabatan);
-    $responden_perusahaan = mysqli_real_escape_string($conn, $responden_perusahaan);
-    $responden_email = mysqli_real_escape_string($conn, $responden_email);
-    $responden_hp = mysqli_real_escape_string($conn, $responden_hp);
-    $responden_kota = mysqli_real_escape_string($conn, $responden_kota);
+    $responden_jabatan = mysqli_real_escape_string($connect, $responden_jabatan);
+    $responden_perusahaan = mysqli_real_escape_string($connect, $responden_perusahaan);
+    $responden_email = mysqli_real_escape_string($connect, $responden_email);
+    $responden_hp = mysqli_real_escape_string($connect, $responden_hp);
+    $responden_kota = mysqli_real_escape_string($connect, $responden_kota);
 
     $sql2 = "INSERT INTO r_industri (industri_nama, industri_jabatan,industri_perusahaan ,industri_email, industri_hp, industri_kota, id_user) VALUES ('$responden_nama', '$responden_jabatan', '$responden_perusahaan', '$responden_email', '$responden_hp', '$responden_kota', '$responden_id_user')";
 
     echo "SQL2: " . $sql2 . "<br>"; // Debugging
 
-    $resultRegister = $conn->query($sql2);
+    $resultRegister = $connect->query($sql2);
 
     if ($resultRegister === TRUE) {
         echo "Akun mitra berhasil didaftarkan.";
         header("Location: ../index.php");
         exit();
     } else {
-        echo "Error inserting into r_industri: " . $sql2 . "<br>" . $conn->error;
+        echo "Error inserting into r_industri: " . $sql2 . "<br>" . $connect->error;
     }
 }
-$conn->close();
+$connect->close();
 
 ?>
 

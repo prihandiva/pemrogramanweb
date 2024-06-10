@@ -6,20 +6,8 @@ if (!isset($_SESSION["nama"])) {
     exit();
 }
 
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
-
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 $GET_['id_survey'] = 3;
 $id_survey = 3;
-
 
 if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['saran']) && isset($_POST['id_kategori'])) {
     $id_survey = $_POST['id_survey'];
@@ -27,10 +15,10 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
     $saran = $_POST['saran'];
     $id_kategori = $_POST['id_kategori'];
 
-    $resultUserData = $conn->query("SELECT * FROM r_ortu WHERE ortu_nama = '". $nama ."';");
+    $resultUserData = $connect->query("SELECT * FROM r_ortu WHERE ortu_nama = '". $connect->real_escape_string($nama) ."';");
     $row = $resultUserData->fetch_assoc();
 
-    $stmt = $conn->prepare("INSERT INTO t_responden_ortu (id_responden_ortu, id_survey, responden_tanggal, responden_nama, responden_jk, responden_umur, responden_hp, responden_pendidikan, responden_pekerjaan, responden_penghasilan, mahasiswa_nim, mahasiswa_nama, mahasiswa_prodi, saran, id_kategori) VALUES (null, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $connect->prepare("INSERT INTO t_responden_ortu (id_responden_ortu, id_survey, responden_tanggal, responden_nama, responden_jk, responden_umur, responden_hp, responden_pendidikan, responden_pekerjaan, responden_penghasilan, mahasiswa_nim, mahasiswa_nama, mahasiswa_prodi, saran, id_kategori) VALUES (null, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     $stmt->bind_param("ississssssssi", $id_survey, $nama, $row['ortu_jk'], $row['ortu_umur'], $row['ortu_hp'], $row['ortu_pendidikan'], $row['ortu_pekerjaan'], $row['ortu_penghasilan'], $row['mhs_nim'], $row['mhs_nama'], $row['mhs_prodi'], $saran, $id_kategori);
     $status_execute = $stmt->execute();
@@ -38,11 +26,11 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
     $new_id = $stmt->insert_id;
 
     if ($status_execute) {
-        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $_POST['id_kategori']  . " AND id_survey = " . $id_survey;
-        $result = $conn->query($sql);
+        $sql = "SELECT id_soal FROM m_survey_soal s WHERE id_kategori = " . $connect->real_escape_string($_POST['id_kategori'])  . " AND id_survey = " . $connect->real_escape_string($id_survey);
+        $result = $connect->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $stmt = $conn->prepare("INSERT INTO t_jawaban_ortu (id_jawaban_ortu, id_responden_ortu, id_soal, jawaban) VALUES (null, ?, ?, ?)");
+                $stmt = $connect->prepare("INSERT INTO t_jawaban_ortu (id_jawaban_ortu, id_responden_ortu, id_soal, jawaban) VALUES (null, ?, ?, ?)");
                 // Bind the parameters
                 $stmt->bind_param("iis", $new_id, $row['id_soal'], $_POST[$row['id_soal']]);
                 $status_execute = $stmt->execute();
@@ -52,10 +40,8 @@ if (isset($_POST['id_survey']) && isset($_SESSION['nama']) && isset($_POST['sara
 } else {
     echo "Failed input data";
 }
-$conn->close();
+$connect->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +71,7 @@ $conn->close();
             </div>
         </div>
         <div class="text-sm text-end mt-10">
-            <h1><?= $_SESSION['nama'] ?> | <?= $_SESSION['user_type'] ?></h1>
+            <h1><?= htmlspecialchars($_SESSION['nama']) ?> | <?= htmlspecialchars($_SESSION['user_type']) ?></h1>
         </div>
         <hr>
     </div>
@@ -114,7 +100,6 @@ $conn->close();
             </ul>
         </div>
 
-
         <!--DIV KANAN-->
         <div class="col-span-4">
             <div class="text-center mt-60">
@@ -125,7 +110,6 @@ $conn->close();
                 <button class="bg-[#2D1B6B] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><a href="surveyWali.php">Lanjut Survey</a></button>
             </div>
         </div>
-    </div>
     </div>
 </body>
 </html>

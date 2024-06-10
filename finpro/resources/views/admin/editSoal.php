@@ -1,23 +1,17 @@
 <?php
 require_once 'Crud.php';
+include '../koneksi.php';
 session_start();
 if (!isset($_SESSION["nama"]))
 {
 header("location: ../index.php");
 }
-$servername = "localhost";
-$username_db = "root";
-$password_db = "";
-$database = "projekakhir";
 
-$conn = new mysqli($servername, $username_db, $password_db, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+
+
 $id_soal = $_GET['id_soal'];
 $sqlSoal = "SELECT soal_nama From m_survey_soal WHERE id_soal = '$id_soal'";
-$resultSoal = $conn->query($sqlSoal);
+$resultSoal = $connect->query($sqlSoal);
 
 // Mengambil nilai dari hasil query
 $row = $resultSoal->fetch_assoc();
